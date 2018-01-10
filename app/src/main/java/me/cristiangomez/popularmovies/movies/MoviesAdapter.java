@@ -6,18 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.R;
-import me.cristiangomez.popularmovies.data.Movie;
-import me.cristiangomez.popularmovies.util.Utils;
+import me.cristiangomez.popularmovies.data.pojo.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
     private List<Movie> mMovies;

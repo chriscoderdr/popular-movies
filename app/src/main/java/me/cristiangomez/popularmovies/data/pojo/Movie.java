@@ -1,4 +1,4 @@
-package me.cristiangomez.popularmovies.data;
+package me.cristiangomez.popularmovies.data.pojo;
 
 public class Movie {
     private String posterImagePath;
