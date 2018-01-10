@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.util.Utils;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
     private List<Movie> mMovies;
@@ -57,7 +58,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         }
 
         void bind(Movie movie) {
-            mPicasso.load(movie.getPosterImagePath())
+            String contentDescription = itemView.getContext().getString(R.string.content_description_movie_poster,
+                    movie.getMovieName());
+            mMoviePosterIv.setContentDescription(contentDescription);
+            mPicasso.load(Utils.getImageUri(movie.getPosterImagePath()))
                     .fit()
                     .centerCrop()
                     .into(mMoviePosterIv);

@@ -1,8 +1,8 @@
 package me.cristiangomez.popularmovies;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 
+@SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
 }
