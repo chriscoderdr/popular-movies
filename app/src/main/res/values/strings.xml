@@ -3,8 +3,8 @@
     <string name="content_description_movie_poster">%1$s Poster</string>
     <string name="action_sort_most_popular">Sort by most popular</string>
     <string name="action_sort_highest_rated">Sort by highest rated</string>
-    <string name="movies_substitle_highest_rated">Sorted By highest rated</string>
-    <string name="movies_substitle_most_popular">Sorted by Most popular</string>
+    <string name="movies_subtitle_highest_rated">Sorted By highest rated</string>
+    <string name="movies_subtitle_most_popular">Sorted by Most popular</string>
     <string name="movies_title">Movies</string>
     <string name="error_network_not_available">Network not available</string>
     <string name="error_network_not_available_action_retry">Retry</string>

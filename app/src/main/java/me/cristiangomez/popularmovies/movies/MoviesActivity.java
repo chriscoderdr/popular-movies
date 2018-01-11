@@ -15,10 +15,11 @@ import me.cristiangomez.popularmovies.network.ApiFactory;
 import me.cristiangomez.popularmovies.util.Constants;
 
 public class MoviesActivity extends BaseActivity {
+    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    MoviesFragment mMoviesFragment;
-    MoviesPresenter mMoviesPresenter;
+    private MoviesFragment mMoviesFragment;
+    private MoviesPresenter mMoviesPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,10 +69,10 @@ public class MoviesActivity extends BaseActivity {
     private void changeSubtitle(MovieSortOption movieSortOption) {
         switch (movieSortOption) {
             case BY_MOST_POPULAR:
-                mToolbar.setSubtitle(R.string.movies_substitle_most_popular);
+                mToolbar.setSubtitle(R.string.movies_subtitle_most_popular);
                 break;
             case BY_HIGHEST_RATED:
-                mToolbar.setSubtitle(R.string.movies_substitle_highest_rated);
+                mToolbar.setSubtitle(R.string.movies_subtitle_highest_rated);
                 break;
         }
     }

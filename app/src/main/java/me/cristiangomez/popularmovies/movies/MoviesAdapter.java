@@ -18,8 +18,8 @@ import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
-    private List<Movie> mMovies;
-    private Picasso mPicasso;
+    private final List<Movie> mMovies;
+    private final Picasso mPicasso;
 
     public MoviesAdapter(List<Movie> movies, Context context) {
         this.mMovies = movies;
@@ -49,7 +49,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_movie_poster)
         ImageView mMoviePosterIv;
-        Picasso mPicasso;
+        final Picasso mPicasso;
 
         MovieViewHolder(View itemView, Picasso picasso) {
             super(itemView);

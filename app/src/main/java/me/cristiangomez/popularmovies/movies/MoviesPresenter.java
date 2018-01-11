@@ -13,12 +13,12 @@ import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.DataError;
 
 public class MoviesPresenter implements MoviesContract.Presenter {
-    private MoviesRepository mMoviesRepository;
+    private final MoviesRepository mMoviesRepository;
     private MoviesContract.View mView;
     private MovieSortOption mMoviesSortOption = Constants.DEFAULT_MOVIE_SORT;
     private List<Movie> mMovies;
-    private Scheduler mObserverScheduler;
-    private Scheduler mSubscriberScheduler;
+    private final Scheduler mObserverScheduler;
+    private final Scheduler mSubscriberScheduler;
 
     public MoviesPresenter(MoviesRepository mMoviesRepository, Scheduler mObserverScheduler, Scheduler mSubscriberScheduler) {
         this.mMoviesRepository = mMoviesRepository;
@@ -68,8 +68,9 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mMoviesRepository.getMovies(mMoviesSortOption).subscribeOn(mSubscriberScheduler)
                 .observeOn(mObserverScheduler)
                 .doOnNext(movies -> {
+                    mMovies = movies;
                     if (mView != null) {
-                        mView.onMovies(movies);
+                        mView.onMovies(mMovies);
                     }
                 })
                 .doOnError(throwable -> {

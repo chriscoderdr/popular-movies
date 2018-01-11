@@ -24,8 +24,10 @@ import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.util.DataError;
 
 public class MoviesFragment extends BaseFragment implements MoviesContract.View {
+    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.rv_movies)
     RecyclerView mMoviesRv;
+    @SuppressWarnings("WeakerAccess")
     @BindView(R.id.pb_movies)
     ProgressBar mMoviesPb;
     private Unbinder mUnbinder;
@@ -104,7 +106,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         mMoviesRv.setVisibility(View.INVISIBLE);
     }
 
-    public void showMovieList() {
+    private void showMovieList() {
         dismissError();
         mMoviesRv.setVisibility(View.VISIBLE);
         mMoviesPb.setVisibility(View.INVISIBLE);
