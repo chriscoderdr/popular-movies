@@ -17,4 +17,9 @@ public interface TheMovieDbApi {
                                                         @Query("language") String language,
                                                         @Query("page") int page);
 
+    @GET("/3/movie/popular")
+    Observable<Response<MoviesResponse>> popularMovies(@Query("api_key") String apiKey,
+                                                        @Query("language") String language,
+                                                        @Query("page") int page);
+
 }

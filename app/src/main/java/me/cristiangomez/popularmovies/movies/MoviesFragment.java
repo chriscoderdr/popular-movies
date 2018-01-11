@@ -116,9 +116,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         mErrorSnb = Snackbar.make(mMoviesRv, R.string.error_network_not_available,
                 Snackbar.LENGTH_INDEFINITE);
         mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
-                v -> {
-            mMoviesPresenter.retryMoviesLoad();
-                });
+                v -> mMoviesPresenter.retryMoviesLoad());
         mErrorSnb.show();
     }
 

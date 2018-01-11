@@ -55,7 +55,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             mView.showLoading();
             mView.dismissError();
         }
-        mMoviesRepository.getMovies().subscribeOn(Schedulers.io())
+        mMoviesRepository.getMovies(mMoviesSortOption).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(movies -> {
                     if (mView != null) {
