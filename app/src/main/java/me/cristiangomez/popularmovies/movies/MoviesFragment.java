@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ import me.cristiangomez.popularmovies.data.pojo.Movie;
 public class MoviesFragment extends BaseFragment implements MoviesContract.View {
     @BindView(R.id.rv_movies)
     RecyclerView mMoviesRv;
+    @BindView(R.id.pb_movies)
+    ProgressBar mMoviesPb;
     private Unbinder mUnbinder;
     private MoviesPresenter mMoviesPresenter;
 
@@ -44,6 +47,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onStart() {
         super.onStart();
+        showLoading();
         mMoviesPresenter.takeView(this);
     }
 
@@ -59,11 +63,23 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
 
     @Override
     public void onMovies(List<Movie> movies) {
+        showMovieList();
         mMoviesRv.setAdapter(new MoviesAdapter(movies, getContext()));
     }
 
     public void onSortChanged(MovieSortOption movieSortOption) {
+        showLoading();
         mMoviesRv.setAdapter(null);
         mMoviesPresenter.onSortChanged(movieSortOption);
+    }
+
+    public void showLoading() {
+        mMoviesPb.setVisibility(View.VISIBLE);
+        mMoviesRv.setVisibility(View.INVISIBLE);
+    }
+
+    public void showMovieList() {
+        mMoviesRv.setVisibility(View.VISIBLE);
+        mMoviesPb.setVisibility(View.INVISIBLE);
     }
 }
