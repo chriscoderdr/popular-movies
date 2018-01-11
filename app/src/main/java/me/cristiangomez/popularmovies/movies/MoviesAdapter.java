@@ -59,9 +59,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
         void bind(Movie movie) {
             String contentDescription = itemView.getContext().getString(R.string.content_description_movie_poster,
-                    movie.getMovieName());
+                    movie.getTitle());
             mMoviePosterIv.setContentDescription(contentDescription);
-            mPicasso.load(Utils.getImageUri(movie.getPosterImagePath()))
+            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "w185"))
                     .fit()
                     .centerCrop()
                     .into(mMoviePosterIv);

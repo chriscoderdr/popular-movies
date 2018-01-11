@@ -1,6 +1,7 @@
 package me.cristiangomez.popularmovies.movies;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -30,6 +31,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     private Unbinder mUnbinder;
     private MoviesPresenter mMoviesPresenter;
     private Snackbar mErrorSnb;
+    private static final String SAVE_INSTANCE_MOVIES_RV_POSITION = "MOVIES_RV_POSITION";
+    private Parcelable mSavedRecyclerviewState;
+    private boolean mShouldRestoreState;
 
     @Nullable
     @Override
@@ -50,7 +54,6 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onStart() {
         super.onStart();
-        showLoading();
         mMoviesPresenter.takeView(this);
     }
 
@@ -60,6 +63,22 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         mUnbinder.unbind();
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION, mMoviesRv.getLayoutManager()
+        .onSaveInstanceState());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSavedRecyclerviewState = savedInstanceState.getParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION);
+            mShouldRestoreState = true;
+        }
+    }
+
     public void setMoviesPresenter(MoviesPresenter moviesPresenter) {
         this.mMoviesPresenter = moviesPresenter;
     }
@@ -67,12 +86,14 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onMovies(List<Movie> movies) {
         showMovieList();
+        if (mShouldRestoreState) {
+            mShouldRestoreState = false;
+            mMoviesRv.getLayoutManager().onRestoreInstanceState(mSavedRecyclerviewState);
+        }
         mMoviesRv.setAdapter(new MoviesAdapter(movies, getContext()));
     }
 
     public void onSortChanged(MovieSortOption movieSortOption) {
-        showLoading();
-        mMoviesRv.setAdapter(null);
         mMoviesPresenter.onSortChanged(movieSortOption);
     }
 
@@ -94,10 +115,14 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         mMoviesPb.setVisibility(View.INVISIBLE);
         mErrorSnb = Snackbar.make(mMoviesRv, R.string.error_network_not_available,
                 Snackbar.LENGTH_INDEFINITE);
+        mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
+                v -> {
+            mMoviesPresenter.retryMoviesLoad();
+                });
         mErrorSnb.show();
     }
 
-    private void dismissError() {
+    public void dismissError() {
         if (mErrorSnb != null) {
             mErrorSnb.dismiss();
             mErrorSnb = null;

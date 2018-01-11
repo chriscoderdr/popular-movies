@@ -11,12 +11,14 @@ import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.BaseActivity;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
+import me.cristiangomez.popularmovies.network.ApiFactory;
 import me.cristiangomez.popularmovies.util.Constants;
 
 public class MoviesActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     MoviesFragment mMoviesFragment;
+    MoviesPresenter mMoviesPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +28,20 @@ public class MoviesActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         mMoviesFragment = ((MoviesFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movies_fragment));
-        mMoviesFragment.setMoviesPresenter(new MoviesPresenter(new MoviesRepository()));
+        mMoviesPresenter = (MoviesPresenter) getLastCustomNonConfigurationInstance();
+        if (mMoviesPresenter == null) {
+            mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()));
+        }
+        mMoviesFragment.setMoviesPresenter(mMoviesPresenter);
         changeSubtitle(Constants.DEFAULT_MOVIE_SORT);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMoviesPresenter != null) {
+            mMoviesPresenter.dropView();
+        }
     }
 
     @Override
@@ -60,5 +74,10 @@ public class MoviesActivity extends BaseActivity {
                 mToolbar.setSubtitle(R.string.movies_substitle_highest_rated);
                 break;
         }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mMoviesPresenter;
     }
 }

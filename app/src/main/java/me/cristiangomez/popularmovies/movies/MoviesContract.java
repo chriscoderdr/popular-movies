@@ -12,9 +12,15 @@ public interface MoviesContract {
         void onMovies(List<Movie> movies);
 
         void onError(DataError networkNotAvailable);
+
+        void showLoading();
+
+        void dismissError();
     }
 
     interface Presenter extends BasePresenter<View> {
         void onSortChanged(MovieSortOption movieSortOption);
+
+        void retryMoviesLoad();
     }
 }
