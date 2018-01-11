@@ -115,8 +115,16 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onError(DataError dataError) {
         dismissError();
+        String errorString = null;
+        switch (dataError) {
+            case NETWORK_NOT_AVAILABLE:
+                errorString = getString(R.string.error_network_not_available);
+                break;
+            case INVALID_API_KEY:
+                errorString = getString(R.string.error_invalid_api_key);
+        }
         mMoviesPb.setVisibility(View.INVISIBLE);
-        mErrorSnb = Snackbar.make(mMoviesRv, R.string.error_network_not_available,
+        mErrorSnb = Snackbar.make(mMoviesRv, errorString,
                 Snackbar.LENGTH_INDEFINITE);
         mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
                 v -> mMoviesPresenter.retryMoviesLoad());

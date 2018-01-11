@@ -1,5 +1,5 @@
 package me.cristiangomez.popularmovies.util;
 
 public enum DataError {
-    NETWORK_NOT_AVAILABLE
+    INVALID_API_KEY, NETWORK_NOT_AVAILABLE
 }

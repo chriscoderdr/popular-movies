@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
 import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.DataError;
 
@@ -78,6 +79,8 @@ public class MoviesPresenter implements MoviesContract.Presenter {
                         if (mView != null) {
                             mView.onError(DataError.NETWORK_NOT_AVAILABLE);
                         }
+                    } else if (throwable instanceof InvalidApiKeyException) {
+                        mView.onError(DataError.INVALID_API_KEY);
                     }
                 })
                 .onErrorReturn(throwable -> new ArrayList<>())

@@ -11,11 +11,12 @@ public class ApiFactory {
         return getRetrofit().create(TheMovieDbApi.class);
     }
 
-    private static Retrofit getRetrofit() {
+    public static Retrofit getRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.API_BASE_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
+
 }
