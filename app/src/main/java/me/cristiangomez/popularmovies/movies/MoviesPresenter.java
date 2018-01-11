@@ -86,4 +86,9 @@ public class MoviesPresenter implements MoviesContract.Presenter {
                 .onErrorReturn(throwable -> new ArrayList<>())
                 .subscribe();
     }
+
+    @Override
+    public MoviesContract.PresenterState getState() {
+        return null;
+    }
 }

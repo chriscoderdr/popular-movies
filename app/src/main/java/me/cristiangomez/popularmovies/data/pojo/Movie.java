@@ -1,10 +1,13 @@
 package me.cristiangomez.popularmovies.data.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Movie {
+public class Movie implements Parcelable {
     private String title;
     @JsonProperty("poster_path")
     private String posterPath;
@@ -31,6 +34,42 @@ public class Movie {
         this.duration = duration;
         this.plot = plot;
     }
+
+    protected Movie(Parcel in) {
+        title = in.readString();
+        posterPath = in.readString();
+        releaseYear = in.readInt();
+        rating = in.readString();
+        duration = in.readString();
+        plot = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeInt(releaseYear);
+        dest.writeString(rating);
+        dest.writeString(duration);
+        dest.writeString(plot);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public void setTitle(String title) {
         this.title = title;

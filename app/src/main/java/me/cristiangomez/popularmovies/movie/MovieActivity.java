@@ -8,12 +8,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.BaseActivity;
 import me.cristiangomez.popularmovies.R;
+import me.cristiangomez.popularmovies.data.pojo.Movie;
 
 public class MovieActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    private MovieFragment mMovieFragment;
     private MovieContract.Presenter mMoviePresenter;
+    public static final String EXTRA_MOVIE = "EXTRA_MOVIE";
+    private static final String PRESENTER_STATE = "PRESENTER_STATE";
+    private MovieFragment mMovieFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,8 +26,14 @@ public class MovieActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         mMovieFragment = (MovieFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movie_fragment);
-        mMoviePresenter = new MoviePresenter();
-        mMoviePresenter.takeView(mMovieFragment);
+        if (savedInstanceState == null) {
+            mMoviePresenter = (MoviePresenter) getLastCustomNonConfigurationInstance();
+            if (mMoviePresenter == null) {
+                Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+                mMoviePresenter = new MoviePresenter(movie);
+            }
+            mMoviePresenter.takeView(mMovieFragment);
+        }
     }
 
     @Override
@@ -33,5 +42,28 @@ public class MovieActivity extends BaseActivity {
         if (mMoviePresenter != null) {
             mMoviePresenter.dropView();
         }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return mMoviePresenter;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(PRESENTER_STATE, mMoviePresenter.getState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        MovieContract.PresenterState presenterState = savedInstanceState
+                .getParcelable(PRESENTER_STATE);
+        if (mMovieFragment != null && presenterState != null) {
+            mMoviePresenter = new MoviePresenter(presenterState);
+            mMoviePresenter.takeView(mMovieFragment);
+        }
+
     }
 }
