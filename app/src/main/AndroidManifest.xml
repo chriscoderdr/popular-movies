@@ -22,6 +22,8 @@
         <activity android:name=".movies.MoviesActivity"
             android:label="@string/movies_title"
             />
+        <activity android:name=".movie.MovieActivity"
+            />
     </application>
 
 </manifest>
