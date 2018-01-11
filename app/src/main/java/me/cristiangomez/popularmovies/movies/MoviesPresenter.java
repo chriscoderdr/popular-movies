@@ -3,8 +3,8 @@ package me.cristiangomez.popularmovies.movies;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
@@ -17,9 +17,19 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     private MoviesContract.View mView;
     private MovieSortOption mMoviesSortOption = Constants.DEFAULT_MOVIE_SORT;
     private List<Movie> mMovies;
+    private Scheduler mObserverScheduler;
+    private Scheduler mSubscriberScheduler;
+
+    public MoviesPresenter(MoviesRepository mMoviesRepository, Scheduler mObserverScheduler, Scheduler mSubscriberScheduler) {
+        this.mMoviesRepository = mMoviesRepository;
+        this.mObserverScheduler = mObserverScheduler;
+        this.mSubscriberScheduler = mSubscriberScheduler;
+    }
 
     public MoviesPresenter(MoviesRepository mMoviesRepository) {
         this.mMoviesRepository = mMoviesRepository;
+        mObserverScheduler = AndroidSchedulers.mainThread();
+        mSubscriberScheduler = Schedulers.io();
     }
 
     @Override
@@ -55,8 +65,8 @@ public class MoviesPresenter implements MoviesContract.Presenter {
             mView.showLoading();
             mView.dismissError();
         }
-        mMoviesRepository.getMovies(mMoviesSortOption).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mMoviesRepository.getMovies(mMoviesSortOption).subscribeOn(mSubscriberScheduler)
+                .observeOn(mObserverScheduler)
                 .doOnNext(movies -> {
                     if (mView != null) {
                         mView.onMovies(movies);

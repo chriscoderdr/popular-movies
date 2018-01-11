@@ -46,8 +46,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mMoviesRv.setLayoutManager(new GridLayoutManager(getContext(),
-                2, LinearLayoutManager.VERTICAL, false));
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),
+                2, LinearLayoutManager.VERTICAL, false);
+        mMoviesRv.setLayoutManager(layoutManager);
         mMoviesRv.setAdapter(new MoviesAdapter(null, getContext()));
     }
 
