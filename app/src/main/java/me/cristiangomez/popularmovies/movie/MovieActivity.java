@@ -12,6 +12,8 @@ import me.cristiangomez.popularmovies.R;
 public class MovieActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    private MovieFragment mMovieFragment;
+    private MovieContract.Presenter mMoviePresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,5 +21,17 @@ public class MovieActivity extends BaseActivity {
         setContentView(R.layout.activity_movie);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        mMovieFragment = (MovieFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.movie_fragment);
+        mMoviePresenter = new MoviePresenter();
+        mMoviePresenter.takeView(mMovieFragment);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMoviePresenter != null) {
+            mMoviePresenter.dropView();
+        }
     }
 }
