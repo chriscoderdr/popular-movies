@@ -57,7 +57,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onStart() {
         super.onStart();
-        mMoviesPresenter.takeView(this);
+        if (mMoviesPresenter != null) {
+            mMoviesPresenter.takeView(this);
+        }
     }
 
     @Override
@@ -70,7 +72,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION, mMoviesRv.getLayoutManager()
-        .onSaveInstanceState());
+                .onSaveInstanceState());
     }
 
     @Override
@@ -97,7 +99,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     }
 
     public void onSortChanged(MovieSortOption movieSortOption) {
-        mMoviesPresenter.onSortChanged(movieSortOption);
+        if (mMoviesPresenter != null) {
+            mMoviesPresenter.onSortChanged(movieSortOption);
+        }
     }
 
     public void showLoading() {
@@ -127,7 +131,11 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         mErrorSnb = Snackbar.make(mMoviesRv, errorString,
                 Snackbar.LENGTH_INDEFINITE);
         mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
-                v -> mMoviesPresenter.retryMoviesLoad());
+                v -> {
+                    if (mMoviesPresenter != null) {
+                        mMoviesPresenter.retryMoviesLoad();
+                    }
+                });
         mErrorSnb.show();
     }
 

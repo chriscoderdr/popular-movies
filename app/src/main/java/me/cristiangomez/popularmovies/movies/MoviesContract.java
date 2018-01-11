@@ -20,7 +20,8 @@ public interface MoviesContract {
     }
 
     interface PresenterState extends BasePresenterState {
-
+        List<Movie> getMovies();
+        MovieSortOption getMovieSortOption();
     }
 
     interface Presenter extends BasePresenter<View, PresenterState> {

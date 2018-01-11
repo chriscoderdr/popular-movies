@@ -27,10 +27,15 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         this.mSubscriberScheduler = mSubscriberScheduler;
     }
 
-    public MoviesPresenter(MoviesRepository mMoviesRepository) {
+    public MoviesPresenter(MoviesRepository mMoviesRepository,
+                           MoviesContract.PresenterState presenterState) {
         this.mMoviesRepository = mMoviesRepository;
         mObserverScheduler = AndroidSchedulers.mainThread();
         mSubscriberScheduler = Schedulers.io();
+        if (presenterState != null) {
+            mMovies = presenterState.getMovies();
+            mMoviesSortOption = presenterState.getMovieSortOption();
+        }
     }
 
     @Override
@@ -89,6 +94,6 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     @Override
     public MoviesContract.PresenterState getState() {
-        return null;
+        return new MoviesPresenterState(mMovies, mMoviesSortOption);
     }
 }

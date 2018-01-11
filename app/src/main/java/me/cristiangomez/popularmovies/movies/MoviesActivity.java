@@ -21,6 +21,7 @@ public class MoviesActivity extends BaseActivity {
     Toolbar mToolbar;
     private MoviesFragment mMoviesFragment;
     private MoviesPresenter mMoviesPresenter;
+    private static final String PRESENTER_STATE = "PRESENTER_STATE";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,12 +31,15 @@ public class MoviesActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         mMoviesFragment = ((MoviesFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movies_fragment));
-        mMoviesPresenter = (MoviesPresenter) getLastCustomNonConfigurationInstance();
-        if (mMoviesPresenter == null) {
-            mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()));
+        if (savedInstanceState == null) {
+            mMoviesPresenter = (MoviesPresenter) getLastCustomNonConfigurationInstance();
+            if (mMoviesPresenter == null) {
+                mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()),
+                        null);
+            }
+            mMoviesFragment.setMoviesPresenter(mMoviesPresenter);
+            changeSubtitle(Constants.DEFAULT_MOVIE_SORT);
         }
-        mMoviesFragment.setMoviesPresenter(mMoviesPresenter);
-        changeSubtitle(Constants.DEFAULT_MOVIE_SORT);
     }
 
     @Override
@@ -79,7 +83,24 @@ public class MoviesActivity extends BaseActivity {
     }
 
     @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return mMoviesPresenter;
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(PRESENTER_STATE, mMoviesPresenter.getState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        MoviesContract.PresenterState presenterState = savedInstanceState
+                .getParcelable(PRESENTER_STATE);
+        mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()),
+                presenterState);
+        if (presenterState != null) {
+            changeSubtitle(presenterState.getMovieSortOption());
+        }
+        if (mMoviesFragment != null) {
+            mMoviesPresenter.takeView(mMoviesFragment);
+        }
+
     }
 }
