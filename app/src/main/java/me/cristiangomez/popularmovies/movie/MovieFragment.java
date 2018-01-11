@@ -32,7 +32,6 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     TextView mMoviePlotTv;
     @BindView(R.id.iv_movie_poster)
     ImageView mMoviePoster;
-    private MovieContract.Presenter mPresenter;
     private Unbinder mUnbinder;
     private Picasso mPicasso;
 

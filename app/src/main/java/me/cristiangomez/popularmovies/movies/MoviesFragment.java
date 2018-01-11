@@ -1,5 +1,6 @@
 package me.cristiangomez.popularmovies.movies;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -36,6 +37,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     private static final String SAVE_INSTANCE_MOVIES_RV_POSITION = "MOVIES_RV_POSITION";
     private Parcelable mSavedRecyclerviewState;
     private boolean mShouldRestoreState;
+    private MoviesFragmentListener mListener;
 
     @Nullable
     @Override
@@ -51,7 +53,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),
                 2, LinearLayoutManager.VERTICAL, false);
         mMoviesRv.setLayoutManager(layoutManager);
-        mMoviesRv.setAdapter(new MoviesAdapter(null, getContext()));
+        MoviesAdapter moviesAdapter = new MoviesAdapter(null, getContext());
+        moviesAdapter.setListener(mMoviesPresenter);
+        mMoviesRv.setAdapter(moviesAdapter);
     }
 
     @Override
@@ -59,6 +63,18 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
         super.onStart();
         if (mMoviesPresenter != null) {
             mMoviesPresenter.takeView(this);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (MoviesFragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new RuntimeException(String.format("%s must implement %s",
+                    context.getClass().getCanonicalName(),
+                    MoviesFragmentListener.class.getCanonicalName()));
         }
     }
 
@@ -95,7 +111,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
             mShouldRestoreState = false;
             mMoviesRv.getLayoutManager().onRestoreInstanceState(mSavedRecyclerviewState);
         }
-        mMoviesRv.setAdapter(new MoviesAdapter(movies, getContext()));
+        MoviesAdapter moviesAdapter = new MoviesAdapter(movies, getContext());
+        moviesAdapter.setListener(mMoviesPresenter);
+        mMoviesRv.setAdapter(moviesAdapter);
     }
 
     public void onSortChanged(MovieSortOption movieSortOption) {
@@ -144,5 +162,16 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
             mErrorSnb.dismiss();
             mErrorSnb = null;
         }
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        if (mListener != null) {
+            mListener.onMovieClick(movie);
+        }
+    }
+
+    interface MoviesFragmentListener {
+        void onMovieClick(Movie movie);
     }
 }

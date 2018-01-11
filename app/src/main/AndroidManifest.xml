@@ -23,6 +23,7 @@
             android:label="@string/movies_title"
             />
         <activity android:name=".movie.MovieActivity"
+            android:label="@string/movie_title"
             />
     </application>
 

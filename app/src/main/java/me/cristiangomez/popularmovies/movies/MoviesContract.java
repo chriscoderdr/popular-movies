@@ -17,6 +17,8 @@ public interface MoviesContract {
         void showLoading();
 
         void dismissError();
+
+        void onMovieClick(Movie movie);
     }
 
     interface PresenterState extends BasePresenterState {

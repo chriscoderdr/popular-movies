@@ -3,6 +3,7 @@ package me.cristiangomez.popularmovies.movie;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +25,10 @@ public class MovieActivity extends BaseActivity {
         setContentView(R.layout.activity_movie);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mMovieFragment = (MovieFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movie_fragment);
         if (savedInstanceState == null) {
@@ -42,6 +47,15 @@ public class MovieActivity extends BaseActivity {
         if (mMoviePresenter != null) {
             mMoviePresenter.dropView();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

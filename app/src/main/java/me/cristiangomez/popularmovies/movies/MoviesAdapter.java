@@ -20,6 +20,7 @@ import me.cristiangomez.popularmovies.util.Utils;
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
     private final List<Movie> mMovies;
     private final Picasso mPicasso;
+    private MoviesAdapterListener mListener;
 
     public MoviesAdapter(List<Movie> movies, Context context) {
         this.mMovies = movies;
@@ -30,7 +31,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MovieViewHolder(LayoutInflater
                 .from(parent.getContext()).inflate(R.layout.item_movie, parent,
-                        false), mPicasso);
+                        false), mPicasso, movie -> {
+            if (mListener != null) {
+                mListener.onMovieClick(movie);
+            }
+        });
     }
 
     @Override
@@ -46,18 +51,29 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return 0;
     }
 
+    public void setListener(MoviesAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_movie_poster)
         ImageView mMoviePosterIv;
         final Picasso mPicasso;
+        Movie mMovie;
 
-        MovieViewHolder(View itemView, Picasso picasso) {
+        MovieViewHolder(View itemView, Picasso picasso, MoviesAdapterListener moviesAdapterListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mPicasso = picasso;
+            itemView.setOnClickListener(v -> {
+                if (moviesAdapterListener != null && mMovie != null) {
+                    moviesAdapterListener.onMovieClick(mMovie);
+                }
+            });
         }
 
         void bind(Movie movie) {
+            mMovie = movie;
             String contentDescription = itemView.getContext().getString(R.string.content_description_movie_poster,
                     movie.getTitle());
             mMoviePosterIv.setContentDescription(contentDescription);
@@ -66,5 +82,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                     .centerCrop()
                     .into(mMoviePosterIv);
         }
+    }
+
+    interface MoviesAdapterListener {
+        void onMovieClick(Movie movie);
     }
 }

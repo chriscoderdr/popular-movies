@@ -9,4 +9,5 @@
     <string name="error_network_not_available">Network not available</string>
     <string name="error_network_not_available_action_retry">Retry</string>
     <string name="error_invalid_api_key">Invalid api key</string>
+    <string name="movie_title">Movie details</string>
 </resources>

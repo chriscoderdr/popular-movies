@@ -1,5 +1,6 @@
 package me.cristiangomez.popularmovies.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -12,10 +13,12 @@ import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.BaseActivity;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
+import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.movie.MovieActivity;
 import me.cristiangomez.popularmovies.network.ApiFactory;
 import me.cristiangomez.popularmovies.util.Constants;
 
-public class MoviesActivity extends BaseActivity {
+public class MoviesActivity extends BaseActivity implements MoviesFragment.MoviesFragmentListener {
     @SuppressWarnings("WeakerAccess")
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -93,14 +96,21 @@ public class MoviesActivity extends BaseActivity {
         super.onRestoreInstanceState(savedInstanceState);
         MoviesContract.PresenterState presenterState = savedInstanceState
                 .getParcelable(PRESENTER_STATE);
-        mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()),
-                presenterState);
         if (presenterState != null) {
+            mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()),
+                    presenterState);
             changeSubtitle(presenterState.getMovieSortOption());
-        }
-        if (mMoviesFragment != null) {
-            mMoviesPresenter.takeView(mMoviesFragment);
+            if (mMoviesFragment != null) {
+                mMoviesPresenter.takeView(mMoviesFragment);
+            }
         }
 
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        Intent intent = new Intent(this, MovieActivity.class);
+        intent.putExtra(MovieActivity.EXTRA_MOVIE, movie);
+        startActivity(intent);
     }
 }

@@ -13,7 +13,7 @@ import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
 import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.DataError;
 
-public class MoviesPresenter implements MoviesContract.Presenter {
+public class MoviesPresenter implements MoviesContract.Presenter, MoviesAdapter.MoviesAdapterListener {
     private final MoviesRepository mMoviesRepository;
     private MoviesContract.View mView;
     private MovieSortOption mMoviesSortOption = Constants.DEFAULT_MOVIE_SORT;
@@ -95,5 +95,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @Override
     public MoviesContract.PresenterState getState() {
         return new MoviesPresenterState(mMovies, mMoviesSortOption);
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        if (mView != null) {
+            mView.onMovieClick(movie);
+        }
     }
 }
