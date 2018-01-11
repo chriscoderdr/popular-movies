@@ -3,6 +3,7 @@ package me.cristiangomez.popularmovies.movies;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
+import me.cristiangomez.popularmovies.util.Constants;
 
 public class MoviesPresenter implements MoviesContract.Presenter {
     private MoviesRepository mMoviesRepository;
@@ -15,7 +16,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @Override
     public void takeView(MoviesContract.View view) {
         this.mView = view;
-        loadMovies();
+        loadMovies(Constants.DEFAULT_MOVIE_SORT);
     }
 
     @Override
@@ -23,7 +24,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
 
     }
 
-    private void loadMovies() {
+    @Override
+    public void onSortChanged(MovieSortOption movieSortOption) {
+        loadMovies(movieSortOption);
+    }
+
+    private void loadMovies(MovieSortOption sortOption) {
         mMoviesRepository.getMovies().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(movies -> mView.onMovies(movies))

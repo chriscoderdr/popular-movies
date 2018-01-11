@@ -12,6 +12,6 @@ public interface MoviesContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-
+        void onSortChanged(MovieSortOption movieSortOption);
     }
 }

@@ -61,4 +61,9 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     public void onMovies(List<Movie> movies) {
         mMoviesRv.setAdapter(new MoviesAdapter(movies, getContext()));
     }
+
+    public void onSortChanged(MovieSortOption movieSortOption) {
+        mMoviesRv.setAdapter(null);
+        mMoviesPresenter.onSortChanged(movieSortOption);
+    }
 }
