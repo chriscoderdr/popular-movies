@@ -3,6 +3,7 @@ package me.cristiangomez.popularmovies.movies;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.util.DataError;
 
 public class MoviesFragment extends BaseFragment implements MoviesContract.View {
     @BindView(R.id.rv_movies)
@@ -27,6 +29,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     ProgressBar mMoviesPb;
     private Unbinder mUnbinder;
     private MoviesPresenter mMoviesPresenter;
+    private Snackbar mErrorSnb;
 
     @Nullable
     @Override
@@ -74,12 +77,30 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     }
 
     public void showLoading() {
+        dismissError();
         mMoviesPb.setVisibility(View.VISIBLE);
         mMoviesRv.setVisibility(View.INVISIBLE);
     }
 
     public void showMovieList() {
+        dismissError();
         mMoviesRv.setVisibility(View.VISIBLE);
         mMoviesPb.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onError(DataError dataError) {
+        dismissError();
+        mMoviesPb.setVisibility(View.INVISIBLE);
+        mErrorSnb = Snackbar.make(mMoviesRv, R.string.error_network_not_available,
+                Snackbar.LENGTH_INDEFINITE);
+        mErrorSnb.show();
+    }
+
+    private void dismissError() {
+        if (mErrorSnb != null) {
+            mErrorSnb.dismiss();
+            mErrorSnb = null;
+        }
     }
 }

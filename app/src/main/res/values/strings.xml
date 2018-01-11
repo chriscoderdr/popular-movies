@@ -6,4 +6,5 @@
     <string name="movies_substitle_highest_rated">Sorted By highest rated</string>
     <string name="movies_substitle_most_popular">Sorted by Most popular</string>
     <string name="movies_title">Movies</string>
+    <string name="error_network_not_available">Network not available</string>
 </resources>

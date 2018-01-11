@@ -1,9 +1,13 @@
 package me.cristiangomez.popularmovies.movies;
 
+import java.util.ArrayList;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.cristiangomez.popularmovies.data.MoviesRepository;
+import me.cristiangomez.popularmovies.exception.NetworkNotAvailableException;
 import me.cristiangomez.popularmovies.util.Constants;
+import me.cristiangomez.popularmovies.util.DataError;
 
 public class MoviesPresenter implements MoviesContract.Presenter {
     private MoviesRepository mMoviesRepository;
@@ -33,6 +37,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
         mMoviesRepository.getMovies().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext(movies -> mView.onMovies(movies))
+                .doOnError(throwable -> {
+                    if (throwable instanceof NetworkNotAvailableException) {
+                        mView.onError(DataError.NETWORK_NOT_AVAILABLE);
+                    }
+                })
+                .onErrorReturn(throwable -> new ArrayList<>())
                 .subscribe();
     }
 }
