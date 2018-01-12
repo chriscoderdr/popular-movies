@@ -6,11 +6,10 @@ import me.cristiangomez.popularmovies.BuildConfig;
 
 public abstract class Utils {
     public static Uri getImageUri(String imagePath, String size) {
-        return Uri.parse(imagePath);
-//        return Uri.parse(BuildConfig.IMAGE_BASE_URL)
-//                .buildUpon()
-//                .appendPath(size)
-//                .appendEncodedPath("/" + imagePath)
-//                .build();
+        return Uri.parse(BuildConfig.IMAGE_BASE_URL)
+                .buildUpon()
+                .appendPath(size)
+                .appendEncodedPath("/" + imagePath)
+                .build();
     }
 }

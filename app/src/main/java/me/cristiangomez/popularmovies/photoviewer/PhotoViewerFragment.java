@@ -50,7 +50,6 @@ public class PhotoViewerFragment extends BaseFragment implements PhotoViewerCont
     @Override
     public void onPhoto(Photo photo) {
         mPicasso.load(photo.getImagePath())
-                .fit()
                 .into(mPhotoIv);
     }
 }

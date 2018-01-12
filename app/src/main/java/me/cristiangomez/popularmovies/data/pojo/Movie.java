@@ -1,20 +1,28 @@
 package me.cristiangomez.popularmovies.data.pojo;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie implements Parcelable {
+    private int id;
     private String title;
     @JsonProperty("poster_path")
     private String posterPath;
-    private int releaseYear;
-    private String rating;
-    private String duration;
-    private String plot;
+    private Date releaseDate;
+    @JsonProperty("vote_average")
+    private int voteAverage;
+    private int runtime;
+    private String overview;
 
 
     public Movie() {
@@ -26,32 +34,34 @@ public class Movie implements Parcelable {
         this.posterPath = posterPath;
     }
 
-    public Movie(String title, String posterPath, int releaseYear, String rating, String duration, String plot) {
+    public Movie(String title, String posterPath, Date releaseDate, int voteAverage, int runtime, String overview) {
         this.title = title;
         this.posterPath = posterPath;
-        this.releaseYear = releaseYear;
-        this.rating = rating;
-        this.duration = duration;
-        this.plot = plot;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.runtime = runtime;
+        this.overview = overview;
     }
 
     protected Movie(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         posterPath = in.readString();
-        releaseYear = in.readInt();
-        rating = in.readString();
-        duration = in.readString();
-        plot = in.readString();
+        voteAverage = in.readInt();
+        runtime = in.readInt();
+        overview = in.readString();
+        releaseDate = (Date) in.readSerializable();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(posterPath);
-        dest.writeInt(releaseYear);
-        dest.writeString(rating);
-        dest.writeString(duration);
-        dest.writeString(plot);
+        dest.writeInt(voteAverage);
+        dest.writeInt(runtime);
+        dest.writeString(overview);
+        dest.writeSerializable(releaseDate);
     }
 
     @Override
@@ -71,6 +81,14 @@ public class Movie implements Parcelable {
         }
     };
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -87,35 +105,45 @@ public class Movie implements Parcelable {
         return title;
     }
 
-    public int getReleaseYear() {
-        return releaseYear;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setReleaseYear(int releaseYear) {
-        this.releaseYear = releaseYear;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
-    public String getRating() {
-        return rating;
+    @JsonProperty("release_date")
+    public void setReleaseData(String releaseData) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            releaseDate = formatter.parse(releaseData);
+        } catch (ParseException e) {
+            Log.e(Movie.class.getCanonicalName(), e.getMessage());
+        }
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public int getVoteAverage() {
+        return voteAverage;
     }
 
-    public String getDuration() {
-        return duration;
+    public void setVoteAverage(int voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public int getRuntime() {
+        return runtime;
     }
 
-    public String getPlot() {
-        return plot;
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
     }
 
-    public void setPlot(String plot) {
-        this.plot = plot;
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 }

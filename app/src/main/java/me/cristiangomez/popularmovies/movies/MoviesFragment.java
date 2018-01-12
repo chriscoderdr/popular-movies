@@ -50,6 +50,10 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null) {
+            mSavedRecyclerviewState = savedInstanceState.getParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION);
+            mShouldRestoreState = true;
+        }
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),
                 2, LinearLayoutManager.VERTICAL, false);
         mMoviesRv.setLayoutManager(layoutManager);
@@ -59,11 +63,16 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (mMoviesPresenter != null) {
-            mMoviesPresenter.takeView(this);
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            mSavedRecyclerviewState = savedInstanceState.getParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION);
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -91,29 +100,20 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
                 .onSaveInstanceState());
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null) {
-            mSavedRecyclerviewState = savedInstanceState.getParcelable(SAVE_INSTANCE_MOVIES_RV_POSITION);
-            mShouldRestoreState = true;
-        }
-    }
-
     public void setMoviesPresenter(MoviesPresenter moviesPresenter) {
         this.mMoviesPresenter = moviesPresenter;
     }
 
     @Override
     public void onMovies(List<Movie> movies) {
+        MoviesAdapter moviesAdapter = new MoviesAdapter(movies, getContext());
+        moviesAdapter.setListener(mMoviesPresenter);
+        mMoviesRv.setAdapter(moviesAdapter);
         showMovieList();
         if (mShouldRestoreState) {
             mShouldRestoreState = false;
             mMoviesRv.getLayoutManager().onRestoreInstanceState(mSavedRecyclerviewState);
         }
-        MoviesAdapter moviesAdapter = new MoviesAdapter(movies, getContext());
-        moviesAdapter.setListener(mMoviesPresenter);
-        mMoviesRv.setAdapter(moviesAdapter);
     }
 
     public void onSortChanged(MovieSortOption movieSortOption) {

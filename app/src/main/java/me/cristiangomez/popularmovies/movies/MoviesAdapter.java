@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
@@ -64,12 +65,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         MovieViewHolder(View itemView, Picasso picasso, MoviesAdapterListener moviesAdapterListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mPicasso = picasso;
             itemView.setOnClickListener(v -> {
                 if (moviesAdapterListener != null && mMovie != null) {
                     moviesAdapterListener.onMovieClick(mMovie);
                 }
             });
+            mPicasso = picasso;
         }
 
         void bind(Movie movie) {
@@ -77,7 +78,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             String contentDescription = itemView.getContext().getString(R.string.content_description_movie_poster,
                     movie.getTitle());
             mMoviePosterIv.setContentDescription(contentDescription);
-            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "w185"))
+            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), Constants.IMAGE_SIZE))
                     .fit()
                     .centerCrop()
                     .into(mMoviePosterIv);

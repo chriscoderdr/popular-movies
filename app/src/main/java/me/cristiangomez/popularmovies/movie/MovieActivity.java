@@ -1,6 +1,5 @@
 package me.cristiangomez.popularmovies.movie;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -8,10 +7,11 @@ import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import me.cristiangomez.popularmovies.BaseActivity;
 import me.cristiangomez.popularmovies.R;
+import me.cristiangomez.popularmovies.data.MoviesRepository;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.network.ApiFactory;
 
 public class MovieActivity extends BaseActivity {
     @BindView(R.id.toolbar)
@@ -37,10 +37,11 @@ public class MovieActivity extends BaseActivity {
             mMoviePresenter = (MoviePresenter) getLastCustomNonConfigurationInstance();
             if (mMoviePresenter == null) {
                 Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-                mMoviePresenter = new MoviePresenter(movie);
+                mMoviePresenter = new MoviePresenter(movie, new MoviesRepository(
+                        ApiFactory.getApi()
+                ));
             }
             mMovieFragment.setPresenter(mMoviePresenter);
-            mMoviePresenter.takeView(mMovieFragment);
         }
     }
 

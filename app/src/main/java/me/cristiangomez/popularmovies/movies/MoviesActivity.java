@@ -2,7 +2,6 @@ package me.cristiangomez.popularmovies.movies;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -50,7 +49,8 @@ public class MoviesActivity extends BaseActivity implements MoviesFragment.Movie
         super.onResume();
         mMoviesFragment = ((MoviesFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movies_fragment));
-        if (mMoviesPresenter != null) {
+        if (mMoviesFragment != null) {
+            mMoviesFragment.setMoviesPresenter(mMoviesPresenter);
             mMoviesPresenter.takeView(mMoviesFragment);
         }
     }

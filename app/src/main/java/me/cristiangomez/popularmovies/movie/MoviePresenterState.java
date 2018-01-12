@@ -1,20 +1,23 @@
 package me.cristiangomez.popularmovies.movie;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 
 public class MoviePresenterState implements MovieContract.PresenterState {
-    private Movie movie;
+    private Movie mMovie;
+
+    public MoviePresenterState(Movie movie) {
+        mMovie = movie;
+    }
 
     protected MoviePresenterState(Parcel in) {
-        movie = in.readParcelable(Movie.class.getClassLoader());
+        mMovie = in.readParcelable(Movie.class.getClassLoader());
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(movie, flags);
+        dest.writeParcelable(mMovie, flags);
     }
 
     @Override
@@ -36,6 +39,6 @@ public class MoviePresenterState implements MovieContract.PresenterState {
 
     @Override
     public Movie getMovie() {
-        return movie;
+        return mMovie;
     }
 }
