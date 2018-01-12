@@ -10,7 +10,6 @@ import me.cristiangomez.popularmovies.data.pojo.Photo;
 
 public class PhotoViewerActivity extends BaseActivity {
     public static final String EXTRA_PHOTO = "EXTRA_PHOTO";
-    private PhotoViewerContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class PhotoViewerActivity extends BaseActivity {
                 .findFragmentById(R.id.photo_viewer_fragment);
         if (savedInstanceState == null) {
             Photo photo = getIntent().getParcelableExtra(EXTRA_PHOTO);
-            mPresenter = new PhotoViewerPresenter(photo);
+            PhotoViewerContract.Presenter mPresenter = new PhotoViewerPresenter(photo);
             mPresenter.takeView(photoViewerFragment);
         }
     }

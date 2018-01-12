@@ -5,7 +5,7 @@ import android.os.Parcel;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 
 public class MoviePresenterState implements MovieContract.PresenterState {
-    private Movie mMovie;
+    private final Movie mMovie;
 
     public MoviePresenterState(Movie movie) {
         mMovie = movie;

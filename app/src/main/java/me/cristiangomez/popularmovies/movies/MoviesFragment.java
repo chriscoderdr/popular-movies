@@ -71,11 +71,6 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View 
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {

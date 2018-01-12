@@ -3,7 +3,7 @@ package me.cristiangomez.popularmovies.photoviewer;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 
 public class PhotoViewerPresenter implements PhotoViewerContract.Presenter {
-    private Photo mPhoto;
+    private final Photo mPhoto;
 
     public PhotoViewerPresenter(Photo mPhoto) {
         this.mPhoto = mPhoto;
