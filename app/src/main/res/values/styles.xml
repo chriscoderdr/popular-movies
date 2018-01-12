@@ -1,11 +1,44 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail" />
+    <style name="AppTheme.MovieDetail.Header" />
+
+    <style name="AppTheme.MovieDetail.Header.Text">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_header</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail.Header.Container">
+        <item name="android:background">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail.SubHeader" />
+
+    <style name="AppTheme.MovieDetail.SubHeader.ReleaseYear">
+        <item name="android:textSize">@dimen/text_sub_header</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail.SubHeader.Duration">
+        <item name="android:textSize">@dimen/text_sub_header</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail.SubHeader.Rating">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
+    <style name="AppTheme.MovieDetail.Plot">
+        <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
 </resources>

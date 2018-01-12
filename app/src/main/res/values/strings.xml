@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">PopularMovies</string>
+    <string name="content_description_movie_poster">%1$s Poster</string>
+    <string name="action_sort_most_popular">Sort by most popular</string>
+    <string name="action_sort_highest_rated">Sort by highest rated</string>
+    <string name="movies_subtitle_highest_rated">Sorted By highest rated</string>
+    <string name="movies_subtitle_most_popular">Sorted by Most popular</string>
+    <string name="movies_title">Movies</string>
+    <string name="error_network_not_available">Network not available</string>
+    <string name="error_network_not_available_action_retry">Retry</string>
+    <string name="error_invalid_api_key">Invalid api key</string>
+    <string name="movie_title">Movie details</string>
+    <string name="movie_poster_click_to_see_bigger">Touch to see full image</string>
+    <string name="movie_runtime">%1$d min</string>
+    <string name="movie_rating">%1$d/10</string>
+    <string name="content_description_photo">Photo</string>
 </resources>
