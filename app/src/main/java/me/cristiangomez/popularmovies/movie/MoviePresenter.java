@@ -1,6 +1,9 @@
 package me.cristiangomez.popularmovies.movie;
 
+import android.net.Uri;
+
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.Photo;
 
 public class MoviePresenter implements MovieContract.Presenter {
     private Movie mMovie;
@@ -28,5 +31,12 @@ public class MoviePresenter implements MovieContract.Presenter {
     @Override
     public MovieContract.PresenterState getState() {
         return null;
+    }
+
+    @Override
+    public void onMoviePosterClick() {
+        if (mView != null) {
+            mView.showMoviePosterViewer(new Photo(Uri.parse(mMovie.getPosterPath())));
+        }
     }
 }

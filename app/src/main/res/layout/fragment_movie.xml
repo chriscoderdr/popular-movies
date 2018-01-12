@@ -34,18 +34,31 @@
                     tools:text="Chappie" />
             </FrameLayout>
 
-            <ImageView
-                android:id="@+id/iv_movie_poster"
-                android:layout_width="@dimen/image_big"
-                android:layout_height="@dimen/image_big"
+            <FrameLayout
+                android:id="@+id/fl_movie_poster_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_big"
                 android:layout_marginStart="@dimen/spacing_big"
                 android:layout_marginTop="@dimen/spacing_small"
-                android:contentDescription="@string/content_description_movie_poster"
-                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fl_movie"
-                tools:background="#cccccc" />
+                app:layout_constraintTop_toBottomOf="@+id/fl_movie">
+                <ImageView
+                    android:id="@+id/iv_movie_poster"
+                    android:layout_width="@dimen/image_big"
+                    android:layout_height="@dimen/image_big"
+                    android:contentDescription="@string/content_description_movie_poster"
+                    android:scaleType="centerCrop"
+                    tools:background="#cccccc" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:text="@string/movie_poster_click_to_see_bigger"
+                    android:background="@color/colorPrimaryDark"
+                    android:textColor="@android:color/white"
+                    />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_movie_release_year"
@@ -55,7 +68,7 @@
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/spacing_small"
-                app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                app:layout_constraintStart_toEndOf="@+id/fl_movie_poster_container"
                 app:layout_constraintTop_toBottomOf="@+id/fl_movie"
                 tools:text="2015" />
 
@@ -67,7 +80,7 @@
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/spacing_smallest"
-                app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                app:layout_constraintStart_toEndOf="@+id/fl_movie_poster_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_year"
                 tools:text="120min" />
 
@@ -79,7 +92,7 @@
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginTop="@dimen/spacing_small"
-                app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                app:layout_constraintStart_toEndOf="@+id/fl_movie_poster_container"
                 app:layout_constraintTop_toBottomOf="@+id/tv_movie_duration"
                 tools:text="8.1/10" />
 
@@ -93,7 +106,7 @@
                 android:layout_marginTop="@dimen/spacing_big"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_movie_poster"
+                app:layout_constraintTop_toBottomOf="@+id/fl_movie_poster_container"
                 tools:text="Every child comes into the world full of promise, and none more so than Chappie: he is gifted, special, a prodigy." />
 
         </android.support.constraint.ConstraintLayout>

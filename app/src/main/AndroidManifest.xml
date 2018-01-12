@@ -25,6 +25,9 @@
         <activity android:name=".movie.MovieActivity"
             android:label="@string/movie_title"
             />
+        <activity android:name=".photoviewer.PhotoViewerActivity"
+            android:immersive="true"
+            />
     </application>
 
 </manifest>

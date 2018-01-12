@@ -46,6 +46,13 @@ public class MoviesActivity extends BaseActivity implements MoviesFragment.Movie
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mMoviesFragment = ((MoviesFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.movies_fragment));
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (mMoviesPresenter != null) {

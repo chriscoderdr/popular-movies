@@ -1,6 +1,7 @@
 package me.cristiangomez.popularmovies.movie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,10 +15,13 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.Photo;
+import me.cristiangomez.popularmovies.photoviewer.PhotoViewerActivity;
 
 public class MovieFragment extends BaseFragment implements MovieContract.View {
     @BindView(R.id.tv_movie_title)
@@ -34,6 +38,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     ImageView mMoviePoster;
     private Unbinder mUnbinder;
     private Picasso mPicasso;
+    private MovieContract.Presenter mPresenter;
 
     @Override
     public void onAttach(Context context) {
@@ -57,6 +62,17 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         }
     }
 
+    @OnClick(R.id.fl_movie_poster_container)
+    public void onMoviePosterClick() {
+        mPresenter.onMoviePosterClick();
+    }
+
+    public void showMoviePosterViewer(Photo photo) {
+        Intent intent = new Intent(getContext(), PhotoViewerActivity.class);
+        intent.putExtra(PhotoViewerActivity.EXTRA_PHOTO, photo);
+        startActivity(intent);
+    }
+
     @Override
     public void onMovie(Movie movie) {
         if (movie != null) {
@@ -70,5 +86,9 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
                     .centerCrop()
                     .into(mMoviePoster);
         }
+    }
+
+    public void setPresenter(MovieContract.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 }

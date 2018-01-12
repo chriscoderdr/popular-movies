@@ -56,7 +56,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_movie_poster)
+        @BindView(R.id.fl_movie_poster_container)
         ImageView mMoviePosterIv;
         final Picasso mPicasso;
         Movie mMovie;

@@ -1,5 +1,6 @@
 package me.cristiangomez.popularmovies.movie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.cristiangomez.popularmovies.BaseActivity;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
@@ -37,8 +39,16 @@ public class MovieActivity extends BaseActivity {
                 Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
                 mMoviePresenter = new MoviePresenter(movie);
             }
+            mMovieFragment.setPresenter(mMoviePresenter);
             mMoviePresenter.takeView(mMovieFragment);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMovieFragment = (MovieFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.movie_fragment);
     }
 
     @Override
@@ -59,11 +69,6 @@ public class MovieActivity extends BaseActivity {
     }
 
     @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        return mMoviePresenter;
-    }
-
-    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(PRESENTER_STATE, mMoviePresenter.getState());
@@ -76,8 +81,8 @@ public class MovieActivity extends BaseActivity {
                 .getParcelable(PRESENTER_STATE);
         if (mMovieFragment != null && presenterState != null) {
             mMoviePresenter = new MoviePresenter(presenterState);
+            mMovieFragment.setPresenter(mMoviePresenter);
             mMoviePresenter.takeView(mMovieFragment);
         }
-
     }
 }
