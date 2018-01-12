@@ -49,6 +49,9 @@ public class MovieActivity extends BaseActivity {
         super.onResume();
         mMovieFragment = (MovieFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movie_fragment);
+        if (mMoviePresenter != null) {
+            mMoviePresenter.takeView(mMovieFragment);
+        }
     }
 
     @Override
@@ -82,7 +85,6 @@ public class MovieActivity extends BaseActivity {
         if (mMovieFragment != null && presenterState != null) {
             mMoviePresenter = new MoviePresenter(presenterState);
             mMovieFragment.setPresenter(mMoviePresenter);
-            mMoviePresenter.takeView(mMovieFragment);
         }
     }
 }

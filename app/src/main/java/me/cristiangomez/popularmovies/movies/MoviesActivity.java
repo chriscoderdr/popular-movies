@@ -50,6 +50,9 @@ public class MoviesActivity extends BaseActivity implements MoviesFragment.Movie
         super.onResume();
         mMoviesFragment = ((MoviesFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.movies_fragment));
+        if (mMoviesPresenter != null) {
+            mMoviesPresenter.takeView(mMoviesFragment);
+        }
     }
 
     @Override
@@ -107,9 +110,6 @@ public class MoviesActivity extends BaseActivity implements MoviesFragment.Movie
             mMoviesPresenter = new MoviesPresenter(new MoviesRepository(ApiFactory.getApi()),
                     presenterState);
             changeSubtitle(presenterState.getMovieSortOption());
-            if (mMoviesFragment != null) {
-                mMoviesPresenter.takeView(mMoviesFragment);
-            }
         }
 
     }
