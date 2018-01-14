@@ -16,6 +16,7 @@ android {
         buildConfigField "String", "API_BASE_URL", "\"https://api.themoviedb.org/\""
         buildConfigField "String", "IMAGE_BASE_URL", "\"http://image.tmdb.org/t/p/\""
         buildConfigField "String", "API_KEY", localProperties['api.key']
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -48,4 +49,5 @@ dependencies {
     testImplementation "org.mockito:mockito-core:2.13.0"
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.github.developer-shivam:Crescento:1.2.1'
 }

@@ -1,6 +1,5 @@
 package me.cristiangomez.popularmovies.movie;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,34 +14,32 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.photoviewer.PhotoViewerActivity;
-import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.DataError;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MovieFragment extends BaseFragment implements MovieContract.View {
     @BindView(R.id.tv_movie_title)
     TextView mMovieTitleTv;
-    @BindView(R.id.tv_movie_release_year)
-    TextView mMovieReleaseYearTv;
-    @BindView(R.id.tv_movie_duration)
-    TextView mMovieDurationTv;
-    @BindView(R.id.tv_movie_rating)
-    TextView mMovieRatingTv;
-    @BindView(R.id.tv_movie_plot)
+    //    @BindView(R.id.tv_movie_release_year)
+//    TextView mMovieReleaseYearTv;
+//    @BindView(R.id.tv_movie_duration)
+//    TextView mMovieDurationTv;
+//    @BindView(R.id.tv_movie_rating)
+//    TextView mMovieRatingTv;
+//    @BindView(R.id.tv_movie_plot)
     TextView mMoviePlotTv;
     @BindView(R.id.iv_movie_poster)
     ImageView mMoviePoster;
+    @BindView(R.id.iv_movie_bg_poster)
+    ImageView mMovieBgPoster;
     private Unbinder mUnbinder;
     private Picasso mPicasso;
     private MovieContract.Presenter mPresenter;
@@ -70,10 +67,10 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         }
     }
 
-    @OnClick(R.id.fl_movie_poster_container)
-    public void onMoviePosterClick() {
-        mPresenter.onMoviePosterClick();
-    }
+//    @OnClick(R.id.fl_movie_poster_container)
+//    public void onMoviePosterClick() {
+//        mPresenter.onMoviePosterClick();
+//    }
 
     public void showMoviePosterViewer(Photo photo) {
         Intent intent = new Intent(getContext(), PhotoViewerActivity.class);
@@ -84,22 +81,25 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     @Override
     public void onMovie(Movie movie) {
         if (movie != null) {
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY");
+//            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY");
             mMovieTitleTv.setText(movie.getTitle());
-            if (movie.getReleaseDate() != null) {
-                mMovieReleaseYearTv.setText(dateFormat.format(movie.getReleaseDate()));
-            }
-            if (movie.getRuntime() != 0) {
-                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
-            }
-            mMovieRatingTv.setText(getString(R.string.movie_rating, movie.getVoteAverage()));
-            mMoviePlotTv.setText(movie.getOverview());
-            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
-                    movie.getTitle()));
-            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), Constants.IMAGE_SIZE))
+//            if (movie.getReleaseDate() != null) {
+//                mMovieReleaseYearTv.setText(dateFormat.format(movie.getReleaseDate()));
+//            }
+//            if (movie.getRuntime() != 0) {
+//                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
+//            }
+//            mMovieRatingTv.setText(getString(R.string.movie_rating, movie.getVoteAverage()));
+//            mMoviePlotTv.setText(movie.getOverview());
+//            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
+//                    movie.getTitle()));
+            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
+                    .fit()
+                    .into(mMoviePoster);
+            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
                     .fit()
                     .centerCrop()
-                    .into(mMoviePoster);
+                    .into(mMovieBgPoster);
         }
     }
 
@@ -118,15 +118,15 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
             case INVALID_API_KEY:
                 errorString = getString(R.string.error_invalid_api_key);
         }
-        mErrorSnb = Snackbar.make(mMovieTitleTv, errorString,
-                Snackbar.LENGTH_INDEFINITE);
-        mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
-                v -> {
-                    if (mPresenter != null) {
-                        mPresenter.retryMovieLoad();
-                    }
-                });
-        mErrorSnb.show();
+//        mErrorSnb = Snackbar.make(mMovieTitleTv, errorString,
+//                Snackbar.LENGTH_INDEFINITE);
+//        mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
+//                v -> {
+//                    if (mPresenter != null) {
+//                        mPresenter.retryMovieLoad();
+//                    }
+//                });
+//        mErrorSnb.show();
     }
 
     @Override
