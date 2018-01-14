@@ -40,4 +40,10 @@
         <item name="android:textSize">@dimen/text_normal</item>
     </style>
 
+    <style name="movieRating" parent="Widget.AppCompat.RatingBar">
+        <item name="android:minHeight">120dp</item>
+        <item name="android:maxHeight">120dp</item>
+        <item name="android:numStars">5</item>
+    </style>
+
 </resources>
