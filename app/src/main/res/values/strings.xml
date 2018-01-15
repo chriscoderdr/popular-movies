@@ -10,7 +10,7 @@
     <string name="error_network_not_available_action_retry">Retry</string>
     <string name="error_invalid_api_key">Invalid api key</string>
     <string name="movie_title">Movie details</string>
-    <string name="movie_poster_click_to_see_bigger">Touch to see full image</string>
+    <string name="movie_poster_click_to_see_bigger">Touch to see full movieImage</string>
     <string name="movie_runtime">%1$d min</string>
     <string name="movie_rating">%1$d/10</string>
     <string name="content_description_photo">Photo</string>

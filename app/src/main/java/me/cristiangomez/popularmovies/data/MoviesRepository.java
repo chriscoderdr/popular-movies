@@ -12,6 +12,7 @@ import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
 import me.cristiangomez.popularmovies.movies.MovieSortOption;
 import me.cristiangomez.popularmovies.network.TheMovieDbApi;
+import me.cristiangomez.popularmovies.network.responses.MovieImage;
 import retrofit2.Response;
 
 public class MoviesRepository {
@@ -50,6 +51,16 @@ public class MoviesRepository {
                         return movieResponse.body();
                     } else if (!movieResponse.isSuccessful() && movieResponse.code() == 401) {
                         throw new InvalidApiKeyException();
+                    }
+                    return null;
+                });
+    }
+
+    public Observable<List<MovieImage>> getMovieImages(int id) {
+        return theMovieDbApi.getMoviePhotos(id, BuildConfig.API_KEY, null)
+                .map(imagesResponseResponse -> {
+                    if (imagesResponseResponse.isSuccessful() && imagesResponseResponse.body() != null) {
+                        return imagesResponseResponse.body().getBackdrops();
                     }
                     return null;
                 });
