@@ -1,0 +1,21 @@
+[
+  {
+    "outputType": {
+      "type": "APK"
+    },
+    "apkInfo": {
+      "type": "MAIN",
+      "splits": [],
+      "versionCode": 1,
+      "versionName": "1.0",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    },
+    "path": "app-release.apk",
+    "properties": {
+      "packageId": "me.cristiangomez.popularmovies",
+      "split": "",
+      "minSdkVersion": "15"
+    }
+  }
+]

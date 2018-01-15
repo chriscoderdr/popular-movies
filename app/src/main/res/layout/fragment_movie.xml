@@ -80,5 +80,9 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
 
+        <TextView
+            android:layout_width=""
+            android:layout_height="" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>
