@@ -33,8 +33,8 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 //    @BindView(R.id.tv_movie_duration)
 //    TextView mMovieDurationTv;
 //    @BindView(R.id.tv_movie_rating)
-//    TextView mMovieRatingTv;
-//    @BindView(R.id.tv_movie_plot)
+    TextView mMovieRatingTv;
+    @BindView(R.id.tv_movie_plot)
     TextView mMoviePlotTv;
     @BindView(R.id.iv_movie_poster)
     ImageView mMoviePoster;
@@ -90,7 +90,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 //                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
 //            }
 //            mMovieRatingTv.setText(getString(R.string.movie_rating, movie.getVoteAverage()));
-//            mMoviePlotTv.setText(movie.getOverview());
+            mMoviePlotTv.setText(movie.getOverview());
 //            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
 //                    movie.getTitle()));
             mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
