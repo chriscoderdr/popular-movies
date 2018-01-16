@@ -38,6 +38,7 @@ public class MoviePresenter implements MovieContract.Presenter {
             loadMovieImages();
             loadMovieCast();
             loadMovieVideos();
+            loadMovieRecomendations();
         }
     }
 
@@ -132,6 +133,26 @@ public class MoviePresenter implements MovieContract.Presenter {
         }
     }
 
+    private void loadMovieRecomendations() {
+        if (mMovie != null) {
+            mMoviesRepository.getMovieRecomendations(mMovie.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+
+                    })
+                    .onErrorReturn(throwable -> {
+                        return null;
+                    })
+                    .doOnNext(movies -> {
+                        if (mView != null) {
+                            mView.onMovieRecommendations(movies);
+                        }
+                    })
+                    .subscribe();
+        }
+    }
+
     @Override
     public void dropView() {
         mView = null;
@@ -158,7 +179,7 @@ public class MoviePresenter implements MovieContract.Presenter {
     @Override
     public void onMovieImageTouch(MovieImage movieImage) {
         if (mView != null) {
-            mView.showMovieImagePhotoviewer(movieImage);
+            mView.showMovieImagePhotoViewer(movieImage);
         }
     }
 }

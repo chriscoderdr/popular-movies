@@ -87,4 +87,14 @@ public class MoviesRepository {
                     return null;
                 });
     }
+
+    public Observable<List<Movie>> getMovieRecomendations(int id) {
+        return theMovieDbApi.getMovieRecomendations(id, BuildConfig.API_KEY)
+                .map(moviesResponseResponse -> {
+                    if (moviesResponseResponse.isSuccessful() && moviesResponseResponse.body() != null) {
+                        return moviesResponseResponse.body().getResults();
+                    }
+                    return null;
+                });
+    }
 }

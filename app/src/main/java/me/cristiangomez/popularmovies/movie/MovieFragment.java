@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -38,20 +39,19 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 //    TextView mMovieDurationTv;
 //    @BindView(R.id.tv_movie_rating)
     TextView mMovieRatingTv;
-    @BindView(R.id.tv_movie_plot)
-    TextView mMoviePlotTv;
     private Unbinder mUnbinder;
     private Picasso mPicasso;
     private MovieContract.Presenter mPresenter;
     private Snackbar mErrorSnb;
-    @BindView(R.id.rv_photos)
-    RecyclerView mPhotosRv;
+    @BindView(R.id.vp_view_pager)
+    ViewPager mViewPager;
     @BindView(R.id.mh_header)
     MovieHeaderView mMovieHeaderView;
-    @BindView(R.id.rv_movie_cast)
-    RecyclerView mMovieCastRv;
-    @BindView(R.id.rv_movie_videos)
-    RecyclerView mMovieVideosRv;
+    @BindView(R.id.sliding_tabs)
+    TabLayout mTabsTl;
+    @BindView(R.id.scroll_view)
+    ScrollView mScrollView;
+    MovieDetailViewPager mViewPagerAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -64,15 +64,10 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         mUnbinder = ButterKnife.bind(this, view);
-        mPhotosRv.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        mPhotosRv.setAdapter(new MovieImagesAdapter(null, null));
-        mMovieCastRv.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        mMovieCastRv.setAdapter(new MovieCastAdapter(null, null));
-        mMovieVideosRv.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        mMovieVideosRv.setAdapter(new MovieVideosAdapter(null, null));
+        mScrollView.setFillViewport(true);
+        mViewPagerAdapter = new MovieDetailViewPager();
+        mViewPager.setAdapter(mViewPagerAdapter);
+        mTabsTl.setupWithViewPager(mViewPager);
         return view;
     }
 
@@ -103,7 +98,6 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 //                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
 //            }
 //            mMovieRatingTv.setText(getString(R.string.movie_rating, movie.getVoteAverage()));
-            mMoviePlotTv.setText(movie.getOverview());
 //            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
 //                    movie.getTitle()));
         }
@@ -145,30 +139,26 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 
     @Override
     public void onMovieImages(List<MovieImage> movieImages) {
-        MovieImagesAdapter adapter = new MovieImagesAdapter(
-                movieImages, Picasso.with(getContext().getApplicationContext())
-        );
-        adapter.setListener(movieImage -> {
-            mPresenter.onMovieImageTouch(movieImage);
-        });
-        mPhotosRv.swapAdapter(adapter, true);
+        mViewPagerAdapter.getMovieOverview().bindMovieImages(movieImages);
     }
 
     @Override
     public void onMovieCast(List<Cast> casts) {
-        mMovieCastRv.swapAdapter(new MovieCastAdapter(casts, mPicasso),
-                true);
+        mViewPagerAdapter.getMovieOverview().bindCast(casts);
     }
 
     @Override
     public void onMovieVideos(List<MovieVideo> movieVideos) {
-        mMovieVideosRv.swapAdapter(new MovieVideosAdapter(
-                movieVideos, mPicasso
-        ), true);
+        mViewPagerAdapter.getMovieOverview().bindMovieVideos(movieVideos);
     }
 
     @Override
-    public void showMovieImagePhotoviewer(MovieImage movieImage) {
+    public void onMovieRecommendations(List<Movie> movies) {
+        mViewPagerAdapter.getMovieOverview().binMovieRecomendations(movies);
+    }
+
+    @Override
+    public void showMovieImagePhotoViewer(MovieImage movieImage) {
         Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
         intent.putExtra(PhotoViewerActivity.EXTRA_PHOTO,
                 new Photo(Utils.getImageUri(movieImage.getFilePath(),

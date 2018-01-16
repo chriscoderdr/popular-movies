@@ -24,11 +24,13 @@ public interface MovieContract {
 
         void onMovieImages(List<MovieImage> mMovieImages);
 
-        void showMovieImagePhotoviewer(MovieImage movieImage);
+        void showMovieImagePhotoViewer(MovieImage movieImage);
 
         void onMovieCast(List<Cast> casts);
 
         void onMovieVideos(List<MovieVideo> movieVideos);
+
+        void onMovieRecommendations(List<Movie> movies);
     }
 
     interface PresenterState extends BasePresenterState {

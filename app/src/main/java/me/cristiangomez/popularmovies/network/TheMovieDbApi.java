@@ -40,4 +40,8 @@ public interface TheMovieDbApi {
     Observable<Response<MovieVideoResponse>> getMovieVideos(@Path("id") int id,
                                                             @Query("api_key") String apiKey);
 
+    @GET("/3/movie/{id}/recommendations")
+    Observable<Response<MoviesResponse>> getMovieRecomendations(@Path("id") int id,
+                                                                @Query("api_key") String apiKey);
+
 }

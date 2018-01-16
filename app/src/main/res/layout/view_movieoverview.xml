@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_movie_plot_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Story line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_movie_plot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:ellipsize="end"
+        android:maxLines="5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_movie_plot_label"
+        tools:text="@tools:sample/lorem/random" />
+
+    <TextView
+        android:id="@+id/tv_cast_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="The cast"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@id/tv_movie_plot"
+        app:layout_constraintTop_toBottomOf="@id/tv_movie_plot" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movie_cast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/tv_cast_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_cast_label" />
+
+    <TextView
+        android:id="@+id/tv_movie_photos_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Photos"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@id/tv_cast_label"
+        app:layout_constraintTop_toBottomOf="@id/rv_movie_cast" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_movie_photos_label" />
+
+    <TextView
+        android:id="@+id/tv_videos_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Videos"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
+        app:layout_constraintTop_toBottomOf="@id/rv_photos" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movie_videos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/tv_videos_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_videos_label" />
+
+    <TextView
+        android:id="@+id/tv_recommendations_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Recomendations"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintLeft_toLeftOf="@id/tv_videos_label"
+        app:layout_constraintTop_toBottomOf="@id/rv_movie_videos" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movie_recommendations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/tv_recommendations_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_recommendations_label" />
+</android.support.constraint.ConstraintLayout>
