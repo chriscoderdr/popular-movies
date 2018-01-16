@@ -31,6 +31,7 @@ import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.MovieReview;
 import me.cristiangomez.popularmovies.data.pojo.MovieVideo;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.movie.movieheader.MovieHeaderView;
@@ -194,6 +195,11 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     @Override
     public void onMovieRecommendations(List<Movie> movies) {
         mViewPagerAdapter.getMovieOverview().binMovieRecomendations(movies);
+    }
+
+    @Override
+    public void onMovieReviews(List<MovieReview> movieReviews) {
+        mViewPagerAdapter.getMovieReviews().bind(movieReviews);
     }
 
     @Override

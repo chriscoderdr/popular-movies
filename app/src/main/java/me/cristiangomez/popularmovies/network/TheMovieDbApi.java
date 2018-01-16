@@ -2,10 +2,11 @@ package me.cristiangomez.popularmovies.network;
 
 import io.reactivex.Observable;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
-import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.network.responses.CastResponse;
 import me.cristiangomez.popularmovies.network.responses.ImagesResponse;
+import me.cristiangomez.popularmovies.network.responses.MovieReviewResponse;
 import me.cristiangomez.popularmovies.network.responses.MovieVideoResponse;
+import me.cristiangomez.popularmovies.network.responses.MoviesResponse;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -19,8 +20,8 @@ public interface TheMovieDbApi {
 
     @GET("/3/movie/popular")
     Observable<Response<MoviesResponse>> popularMovies(@Query("api_key") String apiKey,
-                                                        @Query("language") String language,
-                                                        @Query("page") int page);
+                                                       @Query("language") String language,
+                                                       @Query("page") int page);
 
     @GET("/3/movie/{id}")
     Observable<Response<Movie>> getMovie(@Path("id") int id,
@@ -41,7 +42,11 @@ public interface TheMovieDbApi {
                                                             @Query("api_key") String apiKey);
 
     @GET("/3/movie/{id}/recommendations")
-    Observable<Response<MoviesResponse>> getMovieRecomendations(@Path("id") int id,
-                                                                @Query("api_key") String apiKey);
+    Observable<Response<MoviesResponse>> getMovieRecommendations(@Path("id") int id,
+                                                                 @Query("api_key") String apiKey);
+
+    @GET("/3/movie/{id}/reviews")
+    Observable<Response<MovieReviewResponse>> getMovieReviews(@Path("id") int id,
+                                                              @Query("api_key") String apiKey);
 
 }

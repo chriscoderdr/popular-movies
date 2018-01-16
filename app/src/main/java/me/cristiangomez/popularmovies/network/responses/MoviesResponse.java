@@ -1,9 +1,11 @@
-package me.cristiangomez.popularmovies.data.pojo;
+package me.cristiangomez.popularmovies.network.responses;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+
+import me.cristiangomez.popularmovies.data.pojo.Movie;
 
 @SuppressWarnings("unused")
 @JsonIgnoreProperties(ignoreUnknown = true)

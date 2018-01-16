@@ -38,7 +38,8 @@ public class MoviePresenter implements MovieContract.Presenter {
             loadMovieImages();
             loadMovieCast();
             loadMovieVideos();
-            loadMovieRecomendations();
+            loadMovieRecommendations();
+            loadMovieReviews();
         }
     }
 
@@ -133,9 +134,9 @@ public class MoviePresenter implements MovieContract.Presenter {
         }
     }
 
-    private void loadMovieRecomendations() {
+    private void loadMovieRecommendations() {
         if (mMovie != null) {
-            mMoviesRepository.getMovieRecomendations(mMovie.getId())
+            mMoviesRepository.getMovieRecommendations(mMovie.getId())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnError(throwable -> {
@@ -147,6 +148,26 @@ public class MoviePresenter implements MovieContract.Presenter {
                     .doOnNext(movies -> {
                         if (mView != null) {
                             mView.onMovieRecommendations(movies);
+                        }
+                    })
+                    .subscribe();
+        }
+    }
+
+    private void loadMovieReviews() {
+        if (mMovie != null) {
+            mMoviesRepository.getMovieReviews(mMovie.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(throwable -> {
+
+                    })
+                    .onErrorReturn(throwable -> {
+                        return null;
+                    })
+                    .doOnNext(movieReviews -> {
+                        if (mView != null) {
+                            mView.onMovieReviews(movieReviews);
                         }
                     })
                     .subscribe();

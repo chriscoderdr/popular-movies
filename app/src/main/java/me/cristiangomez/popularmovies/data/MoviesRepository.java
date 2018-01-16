@@ -9,12 +9,13 @@ import io.reactivex.Observable;
 import me.cristiangomez.popularmovies.BuildConfig;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.MovieReview;
 import me.cristiangomez.popularmovies.data.pojo.MovieVideo;
-import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
 import me.cristiangomez.popularmovies.movies.MovieSortOption;
 import me.cristiangomez.popularmovies.network.TheMovieDbApi;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
+import me.cristiangomez.popularmovies.network.responses.MoviesResponse;
 import retrofit2.Response;
 
 public class MoviesRepository {
@@ -88,11 +89,21 @@ public class MoviesRepository {
                 });
     }
 
-    public Observable<List<Movie>> getMovieRecomendations(int id) {
-        return theMovieDbApi.getMovieRecomendations(id, BuildConfig.API_KEY)
+    public Observable<List<Movie>> getMovieRecommendations(int id) {
+        return theMovieDbApi.getMovieRecommendations(id, BuildConfig.API_KEY)
                 .map(moviesResponseResponse -> {
                     if (moviesResponseResponse.isSuccessful() && moviesResponseResponse.body() != null) {
                         return moviesResponseResponse.body().getResults();
+                    }
+                    return null;
+                });
+    }
+
+    public Observable<List<MovieReview>> getMovieReviews(int id) {
+        return theMovieDbApi.getMovieReviews(id, BuildConfig.API_KEY)
+                .map(movieReviewResponseResponse -> {
+                    if (movieReviewResponseResponse != null && movieReviewResponseResponse.body() != null) {
+                        return movieReviewResponseResponse.body().getResults();
                     }
                     return null;
                 });

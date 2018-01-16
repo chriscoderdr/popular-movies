@@ -11,7 +11,6 @@ public class MovieDetailViewPagerAdapter extends PagerAdapter {
     private MovieOverviewView mMovieOverview;
     private MovieReviewsView mMovieReviews;
     private Context mContext;
-    private int currentPosition;
 
     public MovieDetailViewPagerAdapter(Context context) {
         mContext = context;
@@ -76,12 +75,6 @@ public class MovieDetailViewPagerAdapter extends PagerAdapter {
         container.removeView((View) view);
     }
 
-    @Override
-    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        super.setPrimaryItem(container, position, object);
-        currentPosition = position;
-    }
-
     public MovieOverviewView getMovieOverview() {
         if (mMovieOverview == null) {
             mMovieOverview = new MovieOverviewView(mContext, null);
@@ -90,7 +83,7 @@ public class MovieDetailViewPagerAdapter extends PagerAdapter {
     }
 
     public MovieReviewsView getMovieReviews() {
-        if (mMovieOverview != null) {
+        if (mMovieReviews == null) {
             mMovieReviews = new MovieReviewsView(mContext, null);
         }
         return mMovieReviews;

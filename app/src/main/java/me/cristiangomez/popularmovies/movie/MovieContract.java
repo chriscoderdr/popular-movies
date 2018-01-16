@@ -7,6 +7,7 @@ import me.cristiangomez.popularmovies.BasePresenterState;
 import me.cristiangomez.popularmovies.BaseView;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.MovieReview;
 import me.cristiangomez.popularmovies.data.pojo.MovieVideo;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
@@ -31,6 +32,8 @@ public interface MovieContract {
         void onMovieVideos(List<MovieVideo> movieVideos);
 
         void onMovieRecommendations(List<Movie> movies);
+
+        void onMovieReviews(List<MovieReview> movieReviews);
     }
 
     interface PresenterState extends BasePresenterState {

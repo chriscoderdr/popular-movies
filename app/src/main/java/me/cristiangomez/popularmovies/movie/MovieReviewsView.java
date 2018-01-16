@@ -10,14 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.R;
+import me.cristiangomez.popularmovies.data.pojo.MovieReview;
 
 public class MovieReviewsView extends FrameLayout {
     @BindView(R.id.rv_movie_reviews)
     RecyclerView mMovieReviews;
+    @BindView(R.id.lv_no_reviews)
+    View mNoReviewsV;
     private View mView;
+    private Picasso mPicasso;
 
     public MovieReviewsView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -42,8 +50,21 @@ public class MovieReviewsView extends FrameLayout {
     }
 
     private void init() {
+        mPicasso = Picasso.with(getContext());
         mMovieReviews.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
         mMovieReviews.setAdapter(new MovieReviewsAdapter(null, null));
+    }
+
+    public void bind(List<MovieReview> movieReviews) {
+        if (movieReviews != null && !movieReviews.isEmpty()) {
+            mMovieReviews.setVisibility(VISIBLE);
+            mNoReviewsV.setVisibility(INVISIBLE);
+            mMovieReviews.swapAdapter(new MovieReviewsAdapter(movieReviews,
+                    mPicasso), true);
+        } else {
+            mMovieReviews.setVisibility(INVISIBLE);
+            mNoReviewsV.setVisibility(VISIBLE);
+        }
     }
 }
