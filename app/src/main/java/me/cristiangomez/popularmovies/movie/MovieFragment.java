@@ -24,6 +24,7 @@ import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.MovieVideo;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.movie.movieheader.MovieHeaderView;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
@@ -49,6 +50,8 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     MovieHeaderView mMovieHeaderView;
     @BindView(R.id.rv_movie_cast)
     RecyclerView mMovieCastRv;
+    @BindView(R.id.rv_movie_videos)
+    RecyclerView mMovieVideosRv;
 
     @Override
     public void onAttach(Context context) {
@@ -67,6 +70,9 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         mMovieCastRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mMovieCastRv.setAdapter(new MovieCastAdapter(null, null));
+        mMovieVideosRv.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mMovieVideosRv.setAdapter(new MovieVideosAdapter(null, null));
         return view;
     }
 
@@ -152,6 +158,13 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     public void onMovieCast(List<Cast> casts) {
         mMovieCastRv.swapAdapter(new MovieCastAdapter(casts, mPicasso),
                 true);
+    }
+
+    @Override
+    public void onMovieVideos(List<MovieVideo> movieVideos) {
+        mMovieVideosRv.swapAdapter(new MovieVideosAdapter(
+                movieVideos, mPicasso
+        ), true);
     }
 
     @Override

@@ -9,6 +9,7 @@ import io.reactivex.Observable;
 import me.cristiangomez.popularmovies.BuildConfig;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.data.pojo.MovieVideo;
 import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
 import me.cristiangomez.popularmovies.movies.MovieSortOption;
@@ -72,6 +73,16 @@ public class MoviesRepository {
                 .map(castResponseResponse -> {
                     if (castResponseResponse.isSuccessful() && castResponseResponse.body() != null) {
                         return castResponseResponse.body().getCast();
+                    }
+                    return null;
+                });
+    }
+
+    public Observable<List<MovieVideo>> getMovieVideos(int id) {
+        return theMovieDbApi.getMovieVideos(id, BuildConfig.API_KEY)
+                .map(movieVideoResponseResponse -> {
+                    if (movieVideoResponseResponse.isSuccessful() && movieVideoResponseResponse.body() != null) {
+                        return movieVideoResponseResponse.body().getResults();
                     }
                     return null;
                 });

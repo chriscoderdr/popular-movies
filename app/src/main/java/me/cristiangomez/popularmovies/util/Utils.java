@@ -12,4 +12,12 @@ public abstract class Utils {
                 .appendEncodedPath("/" + imagePath)
                 .build();
     }
+
+    public static Uri getYoutubeVideoThumbnail(String videoId) {
+        return Uri.parse("https://img.youtube.com/vi/")
+                .buildUpon()
+                .appendEncodedPath(videoId)
+                .appendEncodedPath("hqdefault.jpg")
+                .build();
+    }
 }
