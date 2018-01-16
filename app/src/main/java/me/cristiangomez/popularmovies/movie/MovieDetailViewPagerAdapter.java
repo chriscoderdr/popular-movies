@@ -7,12 +7,13 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MovieDetailViewPager extends PagerAdapter {
+public class MovieDetailViewPagerAdapter extends PagerAdapter {
     private MovieOverviewView mMovieOverview;
     private MovieReviewsView mMovieReviews;
     private Context mContext;
+    private int currentPosition;
 
-    public MovieDetailViewPager(Context context) {
+    public MovieDetailViewPagerAdapter(Context context) {
         mContext = context;
     }
 
@@ -73,6 +74,12 @@ public class MovieDetailViewPager extends PagerAdapter {
                 break;
         }
         container.removeView((View) view);
+    }
+
+    @Override
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.setPrimaryItem(container, position, object);
+        currentPosition = position;
     }
 
     public MovieOverviewView getMovieOverview() {

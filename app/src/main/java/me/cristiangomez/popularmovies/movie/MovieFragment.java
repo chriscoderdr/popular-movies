@@ -57,7 +57,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     TabLayout mTabsTl;
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
-    MovieDetailViewPager mViewPagerAdapter;
+    MovieDetailViewPagerAdapter mViewPagerAdapter;
     private ShareActionProvider mShareActionProvider;
     private Uri movieUri;
 
@@ -79,7 +79,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mScrollView.setFillViewport(true);
-        mViewPagerAdapter = new MovieDetailViewPager(getContext());
+        mViewPagerAdapter = new MovieDetailViewPagerAdapter(getContext());
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabsTl.setupWithViewPager(mViewPager);
         return view;

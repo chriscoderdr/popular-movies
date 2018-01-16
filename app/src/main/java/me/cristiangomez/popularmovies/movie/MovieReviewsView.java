@@ -29,6 +29,11 @@ public class MovieReviewsView extends FrameLayout {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         if (mView != null) {
             this.removeView(mView);

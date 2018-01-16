@@ -9,13 +9,14 @@ import android.view.View;
 
 // solution from https://stackoverflow.com/a/20784791/1987977
 public class ViewPagerCustom extends ViewPager {
+
     public ViewPagerCustom(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
+    //
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         int height = 0;
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
@@ -24,10 +25,9 @@ public class ViewPagerCustom extends ViewPager {
             if (h > height) height = h;
         }
 
-        if (height != 0) {
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
-        }
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
+
 }
