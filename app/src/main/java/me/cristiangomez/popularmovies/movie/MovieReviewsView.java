@@ -21,7 +21,9 @@ public class MovieReviewsView extends FrameLayout {
 
     public MovieReviewsView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        mView = LayoutInflater.from(context).inflate(R.layout.view_movie_reviews, this);
+        mView = LayoutInflater.from(context).inflate(R.layout.view_movie_reviews, this,
+                false);
+        this.addView(mView);
         ButterKnife.bind(this, mView);
         init();
     }
@@ -37,6 +39,6 @@ public class MovieReviewsView extends FrameLayout {
     private void init() {
         mMovieReviews.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        mMovieReviews.setAdapter(new MovieReviewsAdapter());
+        mMovieReviews.setAdapter(new MovieReviewsAdapter(null, null));
     }
 }

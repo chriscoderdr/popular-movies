@@ -28,4 +28,12 @@ public abstract class Utils {
                         .replace(" ", "-"))
                 .build();
     }
+
+    public static Uri getGravatarUri(String id) {
+        return Uri.parse("https://secure.gravatar.com/avatar/")
+                .buildUpon()
+                .appendEncodedPath(id + ".jpg")
+                .appendQueryParameter("s", "64")
+                .build();
+    }
 }

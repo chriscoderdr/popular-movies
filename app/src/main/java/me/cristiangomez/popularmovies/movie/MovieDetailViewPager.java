@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 public class MovieDetailViewPager extends PagerAdapter {
     private MovieOverviewView mMovieOverview;
+    private MovieReviewsView mMovieReviews;
     private Context mContext;
 
     public MovieDetailViewPager(Context context) {
@@ -48,11 +49,17 @@ public class MovieDetailViewPager extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        if (mMovieOverview == null) {
-            mMovieOverview = new MovieOverviewView(mContext, null);
+        View view = null;
+        switch (position) {
+            case 0:
+                view = getMovieOverview();
+                break;
+            case 1:
+                view = getMovieReviews();
+                break;
         }
-        container.addView(mMovieOverview, 0);
-        return mMovieOverview;
+        container.addView(view);
+        return view;
     }
 
     @Override
@@ -60,9 +67,12 @@ public class MovieDetailViewPager extends PagerAdapter {
         switch (position) {
             case 0:
                 mMovieOverview = null;
-                container.removeView(mMovieOverview);
+                break;
+            case 1:
+                mMovieReviews = null;
                 break;
         }
+        container.removeView((View) view);
     }
 
     public MovieOverviewView getMovieOverview() {
@@ -72,5 +82,10 @@ public class MovieDetailViewPager extends PagerAdapter {
         return mMovieOverview;
     }
 
-
+    public MovieReviewsView getMovieReviews() {
+        if (mMovieOverview != null) {
+            mMovieReviews = new MovieReviewsView(mContext, null);
+        }
+        return mMovieReviews;
+    }
 }
