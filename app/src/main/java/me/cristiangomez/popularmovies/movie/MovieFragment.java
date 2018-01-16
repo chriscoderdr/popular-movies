@@ -2,13 +2,19 @@ package me.cristiangomez.popularmovies.movie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
@@ -35,7 +41,7 @@ import me.cristiangomez.popularmovies.util.DataError;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MovieFragment extends BaseFragment implements MovieContract.View {
-//    @BindView(R.id.tv_movie_duration)
+    //    @BindView(R.id.tv_movie_duration)
 //    TextView mMovieDurationTv;
 //    @BindView(R.id.tv_movie_rating)
     TextView mMovieRatingTv;
@@ -52,6 +58,14 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     @BindView(R.id.scroll_view)
     ScrollView mScrollView;
     MovieDetailViewPager mViewPagerAdapter;
+    private ShareActionProvider mShareActionProvider;
+    private Uri movieUri;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -93,6 +107,8 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     @Override
     public void onMovie(Movie movie) {
         if (movie != null) {
+            movieUri = Utils.getTheMovieDbUri(movie.getId(),
+                    movie.getTitle());
             mMovieHeaderView.bind(movie);
             if (mViewPagerAdapter != null) {
                 mViewPagerAdapter.getMovieOverview().bind(movie);
@@ -104,6 +120,26 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 //            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
 //                    movie.getTitle()));
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat
+                .getActionProvider(shareItem);
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, movieUri.toString());
+        if (mShareActionProvider != null) {
+            mShareActionProvider.setShareIntent(intent);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.movie_menu, menu);
     }
 
     public void setPresenter(MovieContract.Presenter presenter) {

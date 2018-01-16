@@ -16,4 +16,5 @@
     <string name="content_description_photo">Photo</string>
     <string name="cast_as">%1$s\n as %2$s</string>
     <string name="cast_actor_and_character_separator">As</string>
+    <string name="share_movie">Share</string>
 </resources>

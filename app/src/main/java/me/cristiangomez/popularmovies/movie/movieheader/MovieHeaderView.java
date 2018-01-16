@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
+import me.cristiangomez.popularmovies.ui.view.RatingsView;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MovieHeaderView extends ConstraintLayout {
@@ -28,6 +29,8 @@ public class MovieHeaderView extends ConstraintLayout {
     TextView mMovieTitleTv;
     @BindView(R.id.tv_release_date)
     TextView mMovieReleaseYearTv;
+    @BindView(R.id.rating)
+    RatingsView mRatingView;
     private Picasso mPicasso;
     private Unbinder mUnbinder;
 
@@ -44,6 +47,7 @@ public class MovieHeaderView extends ConstraintLayout {
 
     public void bind(Movie movie) {
         mMovieTitleTv.setText(movie.getTitle());
+        mRatingView.bind(movie);
         mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
                 .fit()
                 .into(mMoviePoster);

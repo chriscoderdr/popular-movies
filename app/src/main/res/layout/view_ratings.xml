@@ -64,12 +64,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        app:layout_constraintEnd_toStartOf="@id/iiv_rating_4"
+        app:layout_constraintEnd_toStartOf="@id/iv_rating_4"
         android:tint="@color/colorAccent"
         app:srcCompat="@drawable/ic_star_black_24dp" />
 
     <ImageView
-        android:id="@+id/iiv_rating_4"
+        android:id="@+id/iv_rating_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"

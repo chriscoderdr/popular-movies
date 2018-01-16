@@ -32,7 +32,7 @@ public class MovieOverviewView extends ConstraintLayout {
     @BindView(R.id.rv_movie_videos)
     RecyclerView mMovieVideosRv;
     @BindView(R.id.rv_movie_recommendations)
-    RecyclerView mMovieRecomendationsRv;
+    RecyclerView mMovieRecommendationsRv;
     private Picasso mPicasso;
     private Unbinder mUnbinder;
     private View mView;
@@ -81,9 +81,9 @@ public class MovieOverviewView extends ConstraintLayout {
         mMovieVideosRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mMovieVideosRv.setAdapter(new MovieVideosAdapter(null, null));
-        mMovieRecomendationsRv.setAdapter(new MovieRecomendationsAdapter(null,
+        mMovieRecommendationsRv.setAdapter(new MovieRecomendationsAdapter(null,
                 null));
-        mMovieRecomendationsRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
+        mMovieRecommendationsRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
     }
 
@@ -113,7 +113,7 @@ public class MovieOverviewView extends ConstraintLayout {
     }
 
     public void binMovieRecomendations(List<Movie> movies) {
-        mMovieRecomendationsRv.setAdapter(new MovieRecomendationsAdapter(
+        mMovieRecommendationsRv.setAdapter(new MovieRecomendationsAdapter(
                 movies, getContext()
         ));
     }

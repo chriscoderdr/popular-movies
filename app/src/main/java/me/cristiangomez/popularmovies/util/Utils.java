@@ -20,4 +20,12 @@ public abstract class Utils {
                 .appendEncodedPath("hqdefault.jpg")
                 .build();
     }
+
+    public static Uri getTheMovieDbUri(int id, String name) {
+        return Uri.parse("https://www.themoviedb.org/movie/")
+                .buildUpon()
+                .appendEncodedPath(String.format("%d-%s", id, name)
+                        .replace(" ", "-"))
+                .build();
+    }
 }
