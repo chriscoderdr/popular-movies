@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="14dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/iv_reviewer_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -23,17 +23,21 @@
         app:layout_constraintBottom_toBottomOf="@id/iv_reviewer_avatar"
         app:layout_constraintStart_toEndOf="@id/iv_reviewer_avatar"
         app:layout_constraintTop_toTopOf="@id/iv_reviewer_avatar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="Jack Santos"
 
         />
 
-    <TextView
+    <com.borjabravo.readmoretextview.ReadMoreTextView
         android:id="@+id/tv_review_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:maxLines="5"
         app:layout_constraintStart_toStartOf="@id/iv_reviewer_avatar"
         app:layout_constraintTop_toBottomOf="@id/iv_reviewer_avatar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:colorClickableText="@color/accent"
+        app:trimLines="5"
+        app:trimMode="trimModeLine"
         tools:text="@tools:sample/lorem/random" />
 </android.support.constraint.ConstraintLayout>

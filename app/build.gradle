@@ -51,4 +51,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.github.developer-shivam:Crescento:1.2.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.borjabravo:readmoretextview:2.1.0'
 }

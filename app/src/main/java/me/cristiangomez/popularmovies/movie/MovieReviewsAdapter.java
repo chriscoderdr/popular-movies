@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.MovieReview;
-import me.cristiangomez.popularmovies.util.Utils;
 
 public class MovieReviewsAdapter extends RecyclerView.Adapter<MovieReviewsAdapter.MovieReviewViewHolder> {
     private List<MovieReview> mMovieReviews;
@@ -62,8 +62,12 @@ public class MovieReviewsAdapter extends RecyclerView.Adapter<MovieReviewsAdapte
         public void bind(MovieReview movieReview, Picasso picasso) {
             mReviewContent.setText(movieReview.getContent());
             mReviewerNameTv.setText(movieReview.getAuthor());
-            picasso.load(Utils.getGravatarUri(movieReview.getId()))
-                    .into(mReviewerAvatarIv);
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRoundRect(movieReview.getAuthor().substring(0, 1),
+                            itemView.getContext().getResources().getColor(R.color.colorAccent),
+                            itemView.getContext().getResources().getDimensionPixelSize(R.dimen.image_normal)
+                                    / 2);
+            mReviewerAvatarIv.setImageDrawable(drawable);
         }
     }
 }
