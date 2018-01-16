@@ -18,6 +18,8 @@ public class Movie implements Parcelable {
     private String title;
     @JsonProperty("poster_path")
     private String posterPath;
+    @JsonProperty("backdrop_path")
+    private String backdropPath;
     private Date releaseDate;
     @JsonProperty("vote_average")
     private int voteAverage;
@@ -51,6 +53,7 @@ public class Movie implements Parcelable {
         runtime = in.readInt();
         overview = in.readString();
         releaseDate = (Date) in.readSerializable();
+        backdropPath = in.readString();
     }
 
     @Override
@@ -62,6 +65,7 @@ public class Movie implements Parcelable {
         dest.writeInt(runtime);
         dest.writeString(overview);
         dest.writeSerializable(releaseDate);
+        dest.writeString(backdropPath);
     }
 
     @Override
@@ -145,5 +149,13 @@ public class Movie implements Parcelable {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
     }
 }

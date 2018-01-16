@@ -20,6 +20,7 @@ import me.cristiangomez.popularmovies.util.Utils;
 public class MovieImagesAdapter extends RecyclerView.Adapter<MovieImagesAdapter.MovieImageViewHolder> {
     private List<MovieImage> mMovieImages;
     private Picasso mPicasso;
+    private MovieImageAdapterListener mListener;
 
     public MovieImagesAdapter(List<MovieImage> mMovieImages, Picasso mPicasso) {
         this.mMovieImages = mMovieImages;
@@ -36,7 +37,8 @@ public class MovieImagesAdapter extends RecyclerView.Adapter<MovieImagesAdapter.
 
     @Override
     public void onBindViewHolder(MovieImageViewHolder holder, int position) {
-        holder.bind(mMovieImages.get(position), mPicasso);
+        holder.bind(mMovieImages.get(position), mPicasso,
+                mListener);
     }
 
     @Override
@@ -45,6 +47,14 @@ public class MovieImagesAdapter extends RecyclerView.Adapter<MovieImagesAdapter.
             return mMovieImages.size();
         }
         return 0;
+    }
+
+    public void setListener(MovieImageAdapterListener mListener) {
+        this.mListener = mListener;
+    }
+
+    interface MovieImageAdapterListener {
+        void onMovieImageTouch(MovieImage movieImage);
     }
 
     static class MovieImageViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +66,13 @@ public class MovieImagesAdapter extends RecyclerView.Adapter<MovieImagesAdapter.
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(MovieImage movieImage, Picasso picasso) {
+        public void bind(MovieImage movieImage, Picasso picasso,
+                         MovieImageAdapterListener listener) {
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onMovieImageTouch(movieImage);
+                }
+            });
             picasso.load(Utils.getImageUri(movieImage.getFilePath(),
                     Constants.IMAGE_SIZE)).into(mMoviePhotoIv);
         }

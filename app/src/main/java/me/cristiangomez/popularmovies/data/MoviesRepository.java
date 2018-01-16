@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import me.cristiangomez.popularmovies.BuildConfig;
+import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.exceptions.InvalidApiKeyException;
@@ -61,6 +62,16 @@ public class MoviesRepository {
                 .map(imagesResponseResponse -> {
                     if (imagesResponseResponse.isSuccessful() && imagesResponseResponse.body() != null) {
                         return imagesResponseResponse.body().getBackdrops();
+                    }
+                    return null;
+                });
+    }
+
+    public Observable<List<Cast>> getMovieCast(int id) {
+        return theMovieDbApi.getMovieCast(id, BuildConfig.API_KEY)
+                .map(castResponseResponse -> {
+                    if (castResponseResponse.isSuccessful() && castResponseResponse.body() != null) {
+                        return castResponseResponse.body().getCast();
                     }
                     return null;
                 });

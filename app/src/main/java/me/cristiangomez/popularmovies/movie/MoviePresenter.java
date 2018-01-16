@@ -113,4 +113,11 @@ public class MoviePresenter implements MovieContract.Presenter {
     public void retryMovieLoad() {
         loadMovie();
     }
+
+    @Override
+    public void onMovieImageTouch(MovieImage movieImage) {
+        if (mView != null) {
+            mView.showMovieImagePhotoviewer(movieImage);
+        }
+    }
 }

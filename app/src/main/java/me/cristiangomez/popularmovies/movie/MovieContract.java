@@ -21,6 +21,8 @@ public interface MovieContract {
         void dismissError();
 
         void onMovieImages(List<MovieImage> mMovieImages);
+
+        void showMovieImagePhotoviewer(MovieImage movieImage);
     }
 
     interface PresenterState extends BasePresenterState {
@@ -33,5 +35,7 @@ public interface MovieContract {
         void onMoviePosterClick();
 
         void retryMovieLoad();
+
+        void onMovieImageTouch(MovieImage movieImage);
     }
 }

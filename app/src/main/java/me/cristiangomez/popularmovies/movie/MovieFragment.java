@@ -27,6 +27,7 @@ import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
 import me.cristiangomez.popularmovies.photoviewer.PhotoViewerActivity;
+import me.cristiangomez.popularmovies.util.Constants;
 import me.cristiangomez.popularmovies.util.DataError;
 import me.cristiangomez.popularmovies.util.Utils;
 
@@ -106,7 +107,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
             mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
                     .fit()
                     .into(mMoviePoster);
-            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
+            mPicasso.load(Utils.getImageUri(movie.getBackdropPath(), "original"))
                     .fit()
                     .centerCrop()
                     .into(mMovieBgPoster);
@@ -149,8 +150,21 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 
     @Override
     public void onMovieImages(List<MovieImage> movieImages) {
-        mPhotosRv.swapAdapter(new MovieImagesAdapter(
+        MovieImagesAdapter adapter = new MovieImagesAdapter(
                 movieImages, Picasso.with(getContext().getApplicationContext())
-        ), true);
+        );
+        adapter.setListener(movieImage -> {
+            mPresenter.onMovieImageTouch(movieImage);
+        });
+        mPhotosRv.swapAdapter(adapter, true);
+    }
+
+    @Override
+    public void showMovieImagePhotoviewer(MovieImage movieImage) {
+        Intent intent = new Intent(getActivity(), PhotoViewerActivity.class);
+        intent.putExtra(PhotoViewerActivity.EXTRA_PHOTO,
+                new Photo(Utils.getImageUri(movieImage.getFilePath(),
+                        Constants.IMAGE_SIZE_PHOTO_VIEWER)));
+        getActivity().startActivity(intent);
     }
 }
