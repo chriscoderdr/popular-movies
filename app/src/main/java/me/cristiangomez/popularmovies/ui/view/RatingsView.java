@@ -34,7 +34,21 @@ public class RatingsView extends ConstraintLayout {
 
     public void bind(Movie movie) {
         if (movie != null) {
-            mRatingNumberTv.setText(String.valueOf(movie.getVoteAverage()));
+            mRatingNumberTv.setText(getContext().getString(R.string.movie_rating_format,
+                    movie.getVoteAverage()));
+            float rating = movie.getVoteAverage() / 2;
+            int ratingRounded = Math.round(rating);
+            for (int i = 0; i < mRatingIvs.size(); i++) {
+                if (i + 1 <= ratingRounded) {
+                    if (rating % 1 >= 0 && i + 1 == ratingRounded) {
+                        mRatingIvs.get(i).setImageResource(R.drawable.ic_star_half_black_24dp);
+                    } else {
+                        mRatingIvs.get(i).setImageResource(R.drawable.ic_star_black_24dp);
+                    }
+                } else {
+                    mRatingIvs.get(i).setImageResource(R.drawable.ic_star_border_black_24dp);
+                }
+            }
         }
     }
 }

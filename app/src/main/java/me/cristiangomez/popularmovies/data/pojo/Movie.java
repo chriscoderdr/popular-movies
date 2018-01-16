@@ -22,7 +22,7 @@ public class Movie implements Parcelable {
     private String backdropPath;
     private Date releaseDate;
     @JsonProperty("vote_average")
-    private int voteAverage;
+    private float voteAverage;
     private int runtime;
     private String overview;
 
@@ -49,7 +49,7 @@ public class Movie implements Parcelable {
         id = in.readInt();
         title = in.readString();
         posterPath = in.readString();
-        voteAverage = in.readInt();
+        voteAverage = in.readFloat();
         runtime = in.readInt();
         overview = in.readString();
         releaseDate = (Date) in.readSerializable();
@@ -61,7 +61,7 @@ public class Movie implements Parcelable {
         dest.writeInt(id);
         dest.writeString(title);
         dest.writeString(posterPath);
-        dest.writeInt(voteAverage);
+        dest.writeFloat(voteAverage);
         dest.writeInt(runtime);
         dest.writeString(overview);
         dest.writeSerializable(releaseDate);
@@ -127,11 +127,11 @@ public class Movie implements Parcelable {
         }
     }
 
-    public int getVoteAverage() {
+    public float getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(int voteAverage) {
+    public void setVoteAverage(float voteAverage) {
         this.voteAverage = voteAverage;
     }
 
