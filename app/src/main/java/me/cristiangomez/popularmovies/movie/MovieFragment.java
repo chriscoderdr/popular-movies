@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -23,8 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.BaseFragment;
 import me.cristiangomez.popularmovies.R;
+import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
+import me.cristiangomez.popularmovies.movie.movieheader.MovieHeaderView;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
 import me.cristiangomez.popularmovies.photoviewer.PhotoViewerActivity;
 import me.cristiangomez.popularmovies.util.Constants;
@@ -32,26 +33,20 @@ import me.cristiangomez.popularmovies.util.DataError;
 import me.cristiangomez.popularmovies.util.Utils;
 
 public class MovieFragment extends BaseFragment implements MovieContract.View {
-    @BindView(R.id.tv_movie_title)
-    TextView mMovieTitleTv;
-    //    @BindView(R.id.tv_movie_release_year)
-//    TextView mMovieReleaseYearTv;
 //    @BindView(R.id.tv_movie_duration)
 //    TextView mMovieDurationTv;
 //    @BindView(R.id.tv_movie_rating)
     TextView mMovieRatingTv;
     @BindView(R.id.tv_movie_plot)
     TextView mMoviePlotTv;
-    @BindView(R.id.iv_movie_poster)
-    ImageView mMoviePoster;
-    @BindView(R.id.iv_movie_bg_poster)
-    ImageView mMovieBgPoster;
     private Unbinder mUnbinder;
     private Picasso mPicasso;
     private MovieContract.Presenter mPresenter;
     private Snackbar mErrorSnb;
     @BindView(R.id.rv_photos)
     RecyclerView mPhotosRv;
+    @BindView(R.id.mh_header)
+    MovieHeaderView mMovieHeaderView;
 
     @Override
     public void onAttach(Context context) {
@@ -92,11 +87,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     @Override
     public void onMovie(Movie movie) {
         if (movie != null) {
-//            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY");
-            mMovieTitleTv.setText(movie.getTitle());
-//            if (movie.getReleaseDate() != null) {
-//                mMovieReleaseYearTv.setText(dateFormat.format(movie.getReleaseDate()));
-//            }
+            mMovieHeaderView.bind(movie);
 //            if (movie.getRuntime() != 0) {
 //                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
 //            }
@@ -104,13 +95,6 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
             mMoviePlotTv.setText(movie.getOverview());
 //            mMoviePoster.setContentDescription(getString(R.string.content_description_movie_poster,
 //                    movie.getTitle()));
-            mPicasso.load(Utils.getImageUri(movie.getPosterPath(), "original"))
-                    .fit()
-                    .into(mMoviePoster);
-            mPicasso.load(Utils.getImageUri(movie.getBackdropPath(), "original"))
-                    .fit()
-                    .centerCrop()
-                    .into(mMovieBgPoster);
         }
     }
 
@@ -129,15 +113,15 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
             case INVALID_API_KEY:
                 errorString = getString(R.string.error_invalid_api_key);
         }
-//        mErrorSnb = Snackbar.make(mMovieTitleTv, errorString,
-//                Snackbar.LENGTH_INDEFINITE);
-//        mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
-//                v -> {
-//                    if (mPresenter != null) {
-//                        mPresenter.retryMovieLoad();
-//                    }
-//                });
-//        mErrorSnb.show();
+        mErrorSnb = Snackbar.make(getView(), errorString,
+                Snackbar.LENGTH_INDEFINITE);
+        mErrorSnb.setAction(R.string.error_network_not_available_action_retry,
+                v -> {
+                    if (mPresenter != null) {
+                        mPresenter.retryMovieLoad();
+                    }
+                });
+        mErrorSnb.show();
     }
 
     @Override
@@ -157,6 +141,11 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
             mPresenter.onMovieImageTouch(movieImage);
         });
         mPhotosRv.swapAdapter(adapter, true);
+    }
+
+    @Override
+    public void onMovieCast(List<Cast> casts) {
+
     }
 
     @Override

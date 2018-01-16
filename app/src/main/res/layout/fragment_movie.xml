@@ -5,9 +5,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <me.cristiangomez.popularmovies.movie.movieheader.MovieHeaderView
+                android:id="@+id/mh_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_movie_plot"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/lorem/random" />
+
+                <TextView
+                    android:id="@+id/tv_movie_photos_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Photos"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_movie_plot"
+                    app:layout_constraintTop_toBottomOf="@id/tv_movie_plot" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_photos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_movie_photos_label" />
+
+                <TextView
+                    android:id="@+id/tv_cast_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="The cast"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
+                    app:layout_constraintTop_toBottomOf="@id/rv_photos" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="@id/tv_cast_label"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cast_label" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,125 +79,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:elevation="10dp"
             android:minHeight="?attr/actionBarSize"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:subtitleTextColor="@android:color/white"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:titleTextColor="@android:color/white" />
-
-
-        <developer.shivam.crescento.CrescentoImageView
-            android:id="@+id/iv_movie_bg_poster"
-            android:layout_width="match_parent"
-            android:layout_height="276dp"
-            app:crescentoTintAlpha="0"
-            app:crescentoTintColor="@android:color/transparent"
-            app:crescentoTintMode="manual"
-            app:curvature="40dp"
-            app:curvatureDirection="outward"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
-
-        <ImageView
-            android:id="@+id/iv_movie_poster"
-            android:layout_width="133dp"
-            android:layout_height="180dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="236dp"
-            android:scaleType="center"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_movie_bg_poster"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
-        <TextView
-            android:id="@+id/tv_movie_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="48dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_movie_poster"
-            tools:text="The secret life of PI"
-
-            />
-
-        <me.cristiangomez.popularmovies.ui.view.RatingsView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintLeft_toRightOf="@id/iv_movie_poster"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_title" />
-
-        <TextView
-            android:id="@+id/tv_movie_plot_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Story line"
-            app:layout_constraintLeft_toLeftOf="@id/iv_movie_poster"
-            app:layout_constraintTop_toBottomOf="@id/iv_movie_poster" />
-
-
-        <TextView
-            android:id="@+id/tv_movie_plot"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            android:ellipsize="end"
-            android:maxLines="5"
-            app:layout_constraintLeft_toLeftOf="@id/tv_movie_plot_label"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_plot_label"
-            tools:text="@tools:sample/lorem/random" />
-
-        <TextView
-            android:id="@+id/tv_movie_photos_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Photos"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintLeft_toLeftOf="@id/tv_movie_plot"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_plot" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_photos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
-            app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_movie_photos_label" />
-
-        <TextView
-            android:id="@+id/tv_cast_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="The cast"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
-            app:layout_constraintTop_toBottomOf="@id/rv_photos" />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="@id/tv_cast_label"
-            app:layout_constraintTop_toBottomOf="@id/tv_cast_label" />
-    </android.support.constraint.ConstraintLayout>
+    </FrameLayout>
 </ScrollView>

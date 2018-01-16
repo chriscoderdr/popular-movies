@@ -5,6 +5,7 @@ import java.util.List;
 import me.cristiangomez.popularmovies.BasePresenter;
 import me.cristiangomez.popularmovies.BasePresenterState;
 import me.cristiangomez.popularmovies.BaseView;
+import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.Photo;
 import me.cristiangomez.popularmovies.network.responses.MovieImage;
@@ -23,6 +24,8 @@ public interface MovieContract {
         void onMovieImages(List<MovieImage> mMovieImages);
 
         void showMovieImagePhotoviewer(MovieImage movieImage);
+
+        void onMovieCast(List<Cast> casts);
     }
 
     interface PresenterState extends BasePresenterState {

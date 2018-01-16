@@ -36,6 +36,7 @@ public class MoviePresenter implements MovieContract.Presenter {
         if (mMovie != null && mMovie.getRuntime() == 0) {
             loadMovie();
             loadMovieImages();
+            loadMovieCast();
         }
     }
 
@@ -84,9 +85,25 @@ public class MoviePresenter implements MovieContract.Presenter {
 
                     })
                     .onErrorReturn(throwable -> {
-                        throwable.printStackTrace();
                         return null;
                     })
+                    .subscribe();
+        }
+    }
+
+    private void loadMovieCast() {
+        if (mMovie != null) {
+            mMoviesRepository.getMovieCast(mMovie.getId())
+                    .doOnNext(casts -> {
+                        if (mView != null) {
+                            mView.onMovieCast(casts);
+                        }
+                    })
+                    .doOnError(throwable -> {
+
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe();
         }
     }
