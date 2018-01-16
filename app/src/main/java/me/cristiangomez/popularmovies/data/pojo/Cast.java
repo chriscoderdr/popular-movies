@@ -1,11 +1,13 @@
 package me.cristiangomez.popularmovies.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Cast {
     private String character;
     private String name;
+    @JsonProperty("profile_path")
     private String profilePath;
 
     public String getCharacter() {

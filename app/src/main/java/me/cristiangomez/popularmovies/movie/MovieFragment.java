@@ -47,6 +47,8 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     RecyclerView mPhotosRv;
     @BindView(R.id.mh_header)
     MovieHeaderView mMovieHeaderView;
+    @BindView(R.id.rv_movie_cast)
+    RecyclerView mMovieCastRv;
 
     @Override
     public void onAttach(Context context) {
@@ -62,6 +64,9 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         mPhotosRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mPhotosRv.setAdapter(new MovieImagesAdapter(null, null));
+        mMovieCastRv.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        mMovieCastRv.setAdapter(new MovieCastAdapter(null, null));
         return view;
     }
 
@@ -145,7 +150,8 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
 
     @Override
     public void onMovieCast(List<Cast> casts) {
-
+        mMovieCastRv.swapAdapter(new MovieCastAdapter(casts, mPicasso),
+                true);
     }
 
     @Override

@@ -94,6 +94,8 @@ public class MoviePresenter implements MovieContract.Presenter {
     private void loadMovieCast() {
         if (mMovie != null) {
             mMoviesRepository.getMovieCast(mMovie.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .doOnNext(casts -> {
                         if (mView != null) {
                             mView.onMovieCast(casts);
@@ -102,8 +104,9 @@ public class MoviePresenter implements MovieContract.Presenter {
                     .doOnError(throwable -> {
 
                     })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .onErrorReturn(throwable -> {
+                        return null;
+                    })
                     .subscribe();
         }
     }

@@ -5,6 +5,7 @@ import me.cristiangomez.popularmovies.data.pojo.Movie;
 import me.cristiangomez.popularmovies.data.pojo.MoviesResponse;
 import me.cristiangomez.popularmovies.network.responses.CastResponse;
 import me.cristiangomez.popularmovies.network.responses.ImagesResponse;
+import me.cristiangomez.popularmovies.network.responses.MovieVideoResponse;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -34,5 +35,9 @@ public interface TheMovieDbApi {
     @GET("/3/movie/{id}/credits")
     Observable<Response<CastResponse>> getMovieCast(@Path("id") int id,
                                                     @Query("api_key") String apiKey);
+
+    @GET("/3/movie/{id}/videos")
+    Observable<Response<MovieVideoResponse>> getMovieVideos(@Path("id") int id,
+                                                            @Query("api_key") String apiKey);
 
 }
