@@ -65,7 +65,7 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mScrollView.setFillViewport(true);
-        mViewPagerAdapter = new MovieDetailViewPager();
+        mViewPagerAdapter = new MovieDetailViewPager(getContext());
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabsTl.setupWithViewPager(mViewPager);
         return view;
@@ -94,6 +94,9 @@ public class MovieFragment extends BaseFragment implements MovieContract.View {
     public void onMovie(Movie movie) {
         if (movie != null) {
             mMovieHeaderView.bind(movie);
+            if (mViewPagerAdapter != null) {
+                mViewPagerAdapter.getMovieOverview().bind(movie);
+            }
 //            if (movie.getRuntime() != 0) {
 //                mMovieDurationTv.setText(getString(R.string.movie_runtime, movie.getRuntime()));
 //            }

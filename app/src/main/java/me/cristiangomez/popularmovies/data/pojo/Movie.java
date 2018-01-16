@@ -25,6 +25,7 @@ public class Movie implements Parcelable {
     private int voteAverage;
     private int runtime;
     private String overview;
+    private String popularity;
 
 
     public Movie() {
@@ -54,6 +55,7 @@ public class Movie implements Parcelable {
         overview = in.readString();
         releaseDate = (Date) in.readSerializable();
         backdropPath = in.readString();
+        popularity = in.readString();
     }
 
     @Override
@@ -66,6 +68,7 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeSerializable(releaseDate);
         dest.writeString(backdropPath);
+        dest.writeString(popularity);
     }
 
     @Override
@@ -157,5 +160,13 @@ public class Movie implements Parcelable {
 
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
+    }
+
+    public String getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(String popularity) {
+        this.popularity = popularity;
     }
 }

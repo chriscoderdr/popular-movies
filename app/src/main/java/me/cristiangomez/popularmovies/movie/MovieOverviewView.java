@@ -5,6 +5,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import me.cristiangomez.popularmovies.R;
 import me.cristiangomez.popularmovies.data.pojo.Cast;
 import me.cristiangomez.popularmovies.data.pojo.Movie;
@@ -31,29 +34,56 @@ public class MovieOverviewView extends ConstraintLayout {
     @BindView(R.id.rv_movie_recommendations)
     RecyclerView mMovieRecomendationsRv;
     private Picasso mPicasso;
+    private Unbinder mUnbinder;
+    private View mView;
 
     public MovieOverviewView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mView = inflater.inflate(R.layout.view_movieoverview, this, false);
+        addView(mView);
+        mUnbinder = ButterKnife.bind(this, mView);
         init();
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        /*
+        If I don't do this I get NPE exception from recyclerview mGapWorker
+        https://issuetracker.google.com/issues/38375597
+         */
+        if (mView != null) {
+            removeView(mView);
+        }
+        super.onDetachedFromWindow();
+    }
+
     private void init() {
-        inflate(getContext(), R.layout.view_movieoverview, this);
-        ButterKnife.bind(this);
         mPicasso = Picasso.with(getContext().getApplicationContext());
 
-        mPhotosRv.setLayoutManager(new LinearLayoutManager(getContext(),
+        mPhotosRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mPhotosRv.setAdapter(new MovieImagesAdapter(null, null));
-        mMovieCastRv.setLayoutManager(new LinearLayoutManager(getContext(),
+        mMovieCastRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mMovieCastRv.setAdapter(new MovieCastAdapter(null, null));
-        mMovieVideosRv.setLayoutManager(new LinearLayoutManager(getContext(),
+        mMovieVideosRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         mMovieVideosRv.setAdapter(new MovieVideosAdapter(null, null));
         mMovieRecomendationsRv.setAdapter(new MovieRecomendationsAdapter(null,
                 null));
-        mMovieRecomendationsRv.setLayoutManager(new LinearLayoutManager(getContext(),
+        mMovieRecomendationsRv.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, false));
     }
 

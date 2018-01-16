@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/tv_cast_label"
+        android:animateLayoutChanges="false"
         app:layout_constraintTop_toBottomOf="@id/tv_cast_label" />
 
     <TextView
@@ -63,6 +64,7 @@
         android:layout_marginRight="8dp"
         app:layout_constraintLeft_toLeftOf="@id/tv_movie_photos_label"
         app:layout_constraintRight_toRightOf="parent"
+        android:animateLayoutChanges="false"
         app:layout_constraintTop_toBottomOf="@id/tv_movie_photos_label" />
 
     <TextView
@@ -80,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/tv_videos_label"
+        android:animateLayoutChanges="false"
         app:layout_constraintTop_toBottomOf="@id/tv_videos_label" />
 
     <TextView
@@ -97,5 +100,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/tv_recommendations_label"
+        android:animateLayoutChanges="false"
         app:layout_constraintTop_toBottomOf="@id/tv_recommendations_label" />
 </android.support.constraint.ConstraintLayout>
